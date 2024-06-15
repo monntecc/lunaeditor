@@ -46,9 +46,8 @@ const onInteract = (): void => {
   height: 32px;
 
   img {
-    width: 32px;
-    height: 32px;
-    transform: scale(0.4);
+    width: 12px;
+    height: 12px;
   }
 
   &:hover {

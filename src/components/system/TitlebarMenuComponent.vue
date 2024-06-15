@@ -18,7 +18,7 @@ const toggleHovered = (): void => {
 
 <template>
   <div class="titlebar-menu" @mouseenter="toggleHovered" @mouseleave="toggleHovered">
-    <span>{{ menu.title }}</span>
+    <div class="titlebar-menu-title">{{ menu.title }}</div>
     <div v-if="hovered" class="titlebar-menu-options">
       <template v-for="option in menu.options">
         <TitlebarMenuOptionComponent :option="option" />
@@ -38,6 +38,12 @@ const toggleHovered = (): void => {
   &:hover {
     color: #ffffff;
     background-color: $accent;
+  }
+}
+
+.titlebar-menu-title {
+  &::first-letter {
+    text-decoration: underline;
   }
 }
 

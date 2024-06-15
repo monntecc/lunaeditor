@@ -17,6 +17,7 @@ import TitlebarMenusComponent from '@/components/system/TitlebarMenusComponent.v
   align-items: center;
   height: 32px;
   user-select: none;
+  z-index: 10000;
   background: rgb(226, 226, 226);
   background: linear-gradient(
     90deg,

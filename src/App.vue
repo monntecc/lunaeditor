@@ -10,4 +10,10 @@ import TitlebarComponent from '@/components/system/TitlebarComponent.vue';
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.wrapper {
+  position: relative;
+  margin-top: 32px;
+  padding: 2px 8px;
+}
+</style>
