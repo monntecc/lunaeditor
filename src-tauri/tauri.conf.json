@@ -33,6 +33,8 @@
         "title": "Luna Editor",
         "width": 1280,
         "height": 720,
+        "minWidth": 500,
+        "minHeight": 600,
         "decorations": false
       }
     ],

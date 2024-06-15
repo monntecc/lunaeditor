@@ -2,7 +2,6 @@
 import { ref, shallowRef } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useCodeStore } from '@/stores/code.store';
-import { ECodeTheme } from '@/components/editor/models';
 
 export interface CodePayload {
   view: any; // eslint-disable-line
@@ -33,8 +32,6 @@ const onBlur = (event: unknown) => {
 </script>
 
 <template>
-  <button @click="codeStore.setTheme(ECodeTheme.NOCTIS_LILAC)">Set noctis lilac</button>
-  <button @click="codeStore.setTheme(ECodeTheme.DRACULA)">Set dracula</button>
   <Codemirror
     v-model="content"
     placeholder="Code goes here..."
