@@ -1,11 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "esnext",
+    "module": "esnext",
     "useDefineForClassFields": true,
-    "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
+    /* Some configurations */
+    "rootDir": "./src",
+    "outDir": "./ts-build",
+    "baseUrl": ".",
+    "allowJs": true,
+    "paths": {
+      "@/*": [
+        "./src/*" // set path `@/*` as alias of `src/*`
+      ]
+    },
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
