@@ -33,6 +33,7 @@ withDefaults(defineProps<TitlebarMenuOptionComponentProps>(), {});
   color: #0f0f0f;
 
   &:hover {
+    color: #ffffff;
     background-color: $accent;
   }
 }

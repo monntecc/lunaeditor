@@ -36,6 +36,7 @@ const toggleHovered = (): void => {
   text-align: center;
 
   &:hover {
+    color: #ffffff;
     background-color: $accent;
   }
 }
@@ -46,10 +47,16 @@ const toggleHovered = (): void => {
   left: 0;
   display: flex;
   flex-direction: column;
-  background-color: #1a1a1a;
+  padding: 4px;
+  background-color: #ececec;
   box-shadow:
     rgba(0, 0, 0, 0.05) 0 0 0 1px,
     rgb(209, 213, 219) 0 0 0 1px inset;
-  padding: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .titlebar-menu-options {
+    background-color: #1a1a1a;
+  }
 }
 </style>

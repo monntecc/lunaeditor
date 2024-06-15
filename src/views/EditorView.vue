@@ -1,10 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <section class="editor">
-    <input type="text" />
-    <button>Click me</button>
-  </section>
+  <section class="editor"></section>
 </template>
 
 <style scoped lang="scss"></style>
