@@ -1,17 +1,27 @@
 [package]
 name = "lunaeditor"
-version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+version = "0.1.0"
+license = "MIT"
+description = "An exclusive and unique text editor written in Rust"
+authors = ["Vladyslav Potapenko", "Wiktor Słodkowski"]
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+resolver = "2"
 
 [build-dependencies]
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "window-minimize", "window-unmaximize", "window-show", "window-close", "window-hide", "window-unminimize", "window-start-dragging", "window-maximize", "shell-open"] }
+tauri = { version = "1", features = [
+    "window-minimize",
+    "window-unmaximize",
+    "window-show",
+    "window-close",
+    "window-hide",
+    "window-unminimize",
+    "window-start-dragging",
+    "window-maximize",
+    "shell-open"
+] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
