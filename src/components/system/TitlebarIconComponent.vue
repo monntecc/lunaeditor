@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { TSystemTheme, TTitlebarIconType } from '@/components/system/models';
+import type { TTitlebarIconType } from '@/components/system/models';
 
-import { closeApp, maximizeApp, minimizeApp, systemTheme } from '@/components/system/actions';
+import { closeApp, maximizeApp, minimizeApp } from '@/components/system/actions';
 
 export interface TitlebarIconComponentProps {
   type: TTitlebarIconType;
@@ -11,8 +11,7 @@ const props = withDefaults(defineProps<TitlebarIconComponentProps>(), {});
 
 const icon = (): string => {
   const iconsDir = '/assets/icons';
-  const theme: TSystemTheme = systemTheme();
-  return `${iconsDir}/${theme}/${props.type}.png`;
+  return `${iconsDir}/ui/${props.type}.png`;
 };
 
 const onInteract = (): void => {
@@ -49,10 +48,17 @@ const onInteract = (): void => {
   img {
     width: 32px;
     height: 32px;
+    transform: scale(0.4);
   }
 
   &:hover {
     background: $accent;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .titlebar-icon img {
+    filter: invert(100%);
   }
 }
 </style>
