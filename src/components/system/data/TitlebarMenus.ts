@@ -1,5 +1,5 @@
 import type { ITitlebarMenu } from '@/components/system/models';
-import { closeApp, openFile } from '@/components/system/actions';
+import { closeApp, openFile, closeFile } from '@/components/system/actions';
 
 export const titlebarMenus: ITitlebarMenu[] = [
   {
@@ -9,6 +9,11 @@ export const titlebarMenus: ITitlebarMenu[] = [
         title: 'Open',
         onInteract: openFile,
         shortcut: 'ctrl + o'
+      },
+      {
+        title: 'Close all',
+        onInteract: closeFile,
+        shortcut: 'ctrl + p + a'
       },
       {
         title: 'Exit',

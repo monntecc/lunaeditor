@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
+import { onMounted, ref, shallowRef, watch } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useCodeStore } from '@/stores/code.store';
+import { useFileStore } from '@/stores/file.store.ts';
 
 export interface CodePayload {
   view: any; // eslint-disable-line
@@ -17,7 +18,16 @@ const handleReady = (payload: CodePayload) => {
 };
 
 const codeStore = useCodeStore();
-const content = ref(`console.log('Hello, world!')`);
+const fileStore = useFileStore();
+const content = ref<string>('');
+
+onMounted(() => {
+  watch([fileStore.$state], () => {
+    // TODO: Implement normally
+    const file = fileStore.opened[0];
+    content.value = file ? file.text : '';
+  });
+});
 
 const onChange = (event: unknown) => {
   console.log('code change event', event);

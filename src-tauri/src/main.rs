@@ -149,14 +149,14 @@ fn write_file(path: &str, content: &str) {
         info!("File '{}' not found, creating new...", path);
 
         match File::create(path) {
-            Ok(mut f) => f.write_all(bytes.clone()).unwrap(),
+            Ok(mut f) => f.write_all(bytes).unwrap(),
             Err(e) => error!("Cannot write to '{}' file! Error: {}", path, e),
         };
         return;
     }
 
     // Write to existing file
-    match fs::write(path, bytes.clone()) {
+    match fs::write(path, bytes) {
         Ok(_) => (),
         Err(e) => error!("Cannot write to '{}' file! Error: {}", path, e),
     }

@@ -1,2 +1,2 @@
-export { openFile } from './file.actions';
+export { openFile, closeFile } from './file.actions';
 export { closeApp, maximizeApp, minimizeApp, systemTheme } from './system.actions';

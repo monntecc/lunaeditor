@@ -11,7 +11,7 @@ resolver = "2"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "process-exit", "process-relaunch", "fs-copy-file", "clipboard-read-text", "clipboard-write-text", "dialog-ask", "dialog-confirm", "dialog-open", "dialog-save", "fs-create-dir", "fs-exists", "fs-read-dir", "fs-read-file", "fs-rename-file", "fs-write-file", "path-all", "shell-open", "window-center", "window-close", "window-create", "window-hide", "window-maximize", "window-minimize", "window-print", "window-set-decorations", "window-set-focus", "window-set-fullscreen", "window-set-icon", "window-show", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
+tauri = { version = "1", features = [ "fs-read-dir", "clipboard-read-text", "dialog-confirm", "dialog-save", "path-all", "dialog-ask", "fs-read-file", "window-print", "window-set-fullscreen", "fs-copy-file", "process-exit", "fs-rename-file", "fs-exists", "fs-create-dir", "dialog-open", "window-create", "window-center", "clipboard-write-text", "window-set-icon", "window-set-decorations", "fs-write-file", "process-relaunch", "window-set-focus", "shell-open", "window-close", "window-hide", "window-maximize", "window-minimize", "window-show", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
 tauri-plugin-fs-watch = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 tauri-plugin-store = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 serde = { version = "1", features = ["derive"] }
