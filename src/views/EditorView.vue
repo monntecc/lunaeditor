@@ -1,8 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CodeSpaceComponent from '@/components/editor/CodeSpaceComponent.vue';
+</script>
 
 <template>
   <section class="editor">
-    <button>Click me</button>
+    <CodeSpaceComponent />
   </section>
 </template>
 

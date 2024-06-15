@@ -1,11 +1,11 @@
 import { appWindow } from '@tauri-apps/api/window';
 import { TSystemTheme } from '@/components/system/models';
 
-export const minimizeApp = () => {
+export const minimizeApp = (): void => {
   appWindow.minimize().catch();
 };
 
-export const maximizeApp = () => {
+export const maximizeApp = (): void => {
   appWindow.toggleMaximize().catch();
 };
 

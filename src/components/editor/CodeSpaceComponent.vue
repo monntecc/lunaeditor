@@ -1,0 +1,53 @@
+<script setup lang="ts">
+import { ref, shallowRef } from 'vue';
+import { Codemirror } from 'vue-codemirror';
+import { useCodeStore } from '@/stores/code.store';
+import { ECodeTheme } from '@/components/editor/models';
+
+export interface CodePayload {
+  view: any; // eslint-disable-line
+  state: any; // eslint-disable-line
+  container: any; // eslint-disable-line
+}
+
+// Codemirror EditorView instance ref
+const view = shallowRef();
+const handleReady = (payload: CodePayload) => {
+  console.log(payload);
+  view.value = payload.view;
+};
+
+const codeStore = useCodeStore();
+const content = ref(`console.log('Hello, world!')`);
+
+const onChange = (event: unknown) => {
+  console.log('code change event', event);
+};
+
+const onFocus = (event: unknown) => {
+  console.log('code focus event', event);
+};
+const onBlur = (event: unknown) => {
+  console.log('code blur event', event);
+};
+</script>
+
+<template>
+  <button @click="codeStore.setTheme(ECodeTheme.NOCTIS_LILAC)">Set noctis lilac</button>
+  <button @click="codeStore.setTheme(ECodeTheme.DRACULA)">Set dracula</button>
+  <Codemirror
+    v-model="content"
+    placeholder="Code goes here..."
+    :style="{ height: '400px' }"
+    :autofocus="true"
+    :indent-with-tab="true"
+    :tab-size="2"
+    :extensions="codeStore.extensions"
+    @ready="handleReady"
+    @change="onChange"
+    @focus="onFocus"
+    @blur="onBlur"
+  />
+</template>
+
+<style scoped lang="scss"></style>
