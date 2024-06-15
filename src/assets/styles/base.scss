@@ -21,6 +21,12 @@
   -webkit-text-size-adjust: 100%;
 }
 
+body, html {
+  margin: 0;
+  padding: 0;
+  min-width: 1px;
+  box-sizing: border-box;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
