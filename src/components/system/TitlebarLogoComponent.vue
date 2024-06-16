@@ -14,7 +14,7 @@
   img {
     position: absolute;
     width: 64px;
-    height: 64px;
+    height: 48px;
     left: -10px;
     top: -10px;
     transform: rotate(20deg);

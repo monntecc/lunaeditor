@@ -45,7 +45,7 @@ const onBlur = (event: unknown) => {
   <Codemirror
     v-model="content"
     placeholder="Code goes here..."
-    :style="{ height: '400px' }"
+    :style="{ height: 'calc(100% - 32px)' }"
     :autofocus="true"
     :indent-with-tab="true"
     :tab-size="2"
@@ -57,4 +57,8 @@ const onBlur = (event: unknown) => {
   />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.v-codemirror {
+  height: 100%;
+}
+</style>

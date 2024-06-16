@@ -8,4 +8,9 @@ import CodeSpaceComponent from '@/components/editor/CodeSpaceComponent.vue';
   </section>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.editor {
+  width: 100%;
+  height: calc(100vh - 32px);
+}
+</style>
