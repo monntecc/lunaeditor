@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, shallowRef, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue';
 
 import CodeStatusbarComponent from '@/components/editor/CodeStatusbarComponent.vue';
 
@@ -27,6 +27,7 @@ const handleReady = (payload: CodePayload) => {
 
 const codeStore = useCodeStore();
 const fileStore = useFileStore();
+
 const content = ref<string>('');
 const codeData = ref<ICodeData>({
   tabSize: 2,
@@ -35,16 +36,32 @@ const codeData = ref<ICodeData>({
   lang: ECodeLang.PLAIN
 });
 
+const saveActiveUsingKeyboard = async (event: KeyboardEvent): Promise<void> => {
+  if (!fileStore.active) return;
+
+  console.log(event.key);
+  if (event.ctrlKey && event.key === 's') {
+    await fileStore.saveActive();
+  }
+};
+
 onMounted(() => {
   watch([fileStore.$state], () => {
-    // TODO: Implement normally
-    const file = fileStore.opened[0];
-    content.value = file ? file.text : '';
+    if (!fileStore.active) return;
+    content.value = fileStore.active.text;
   });
+
+  // Trigger active file save using CTRL + S
+  document.addEventListener('keydown', saveActiveUsingKeyboard, true);
+});
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', saveActiveUsingKeyboard, false);
 });
 
 const onChange = (content: string) => {
-  console.log('new code content', content);
+  if (!content || !fileStore.active || !fileStore.active.tabId) return;
+  fileStore.updateContent(fileStore.active.tabId, content);
 };
 
 const onUpdate = (event: unknown) => {
@@ -57,25 +74,25 @@ const onUpdate = (event: unknown) => {
     column: cursorPos - cursorLine.from,
     lang: codeStore.lang
   };
-  // console.log('code update event', event);
 };
 </script>
 
 <template>
   <EditorTabView />
   <Codemirror
+    v-if="fileStore.opened.length > 0 && fileStore.active"
     v-model="content"
     placeholder="Code goes here..."
-    :style="{ height: 'calc(100% - 32px)' }"
+    :style="{ height: 'calc(100% - 66px)' }"
     :autofocus="true"
     :indent-with-tab="true"
     :tab-size="codeData.tabSize"
     :extensions="codeStore.extensions"
     @ready="handleReady"
-    @change="onChange"
+    @update:model-value="onChange"
     @update="onUpdate"
   />
-  <CodeStatusbarComponent :data="codeData" />
+  <CodeStatusbarComponent v-if="fileStore.opened.length > 0 && fileStore.active" :data="codeData" />
 </template>
 
 <style scoped lang="scss">

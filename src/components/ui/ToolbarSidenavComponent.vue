@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue';
 
+const lastWidth = ref<number>(320);
 const isResizing = ref<boolean>(false);
 const sidenav = ref<HTMLDivElement | null>(null);
 
@@ -44,7 +45,7 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .toolbar-sidenav {
   position: relative;
-  width: 240px;
+  width: 320px;
   padding: 12px;
   background-color: #ececec;
   color: #0f0f0f;

@@ -142,7 +142,7 @@ fn read_file(path: &str) -> FileInformation {
 }
 
 #[tauri::command]
-fn write_file(path: &str, content: &str) {
+fn write_file(path: &str, content: &str) -> bool {
     // Convert string content to bytes
     let bytes = content.as_bytes();
 
@@ -152,16 +152,24 @@ fn write_file(path: &str, content: &str) {
 
         match File::create(path) {
             Ok(mut f) => f.write_all(bytes).unwrap(),
-            Err(e) => error!("Cannot write to '{}' file! Error: {}", path, e),
+            Err(e) => {
+                error!("Cannot write to '{}' file! Error: {}", path, e);
+                return false;
+            },
         };
-        return;
+        return true;
     }
 
     // Write to existing file
     match fs::write(path, bytes) {
         Ok(_) => (),
-        Err(e) => error!("Cannot write to '{}' file! Error: {}", path, e),
-    }
+        Err(e) => {
+            error!("Cannot write to '{}' file! Error: {}", path, e);
+            return false;
+        },
+    };
+
+    true
 }
 
 #[tauri::command]

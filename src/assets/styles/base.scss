@@ -5,6 +5,8 @@
 @import './components/button';
 @import './components/input';
 
+@import './system/titlebar';
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -27,6 +29,7 @@ body, html {
   min-width: 1px;
   box-sizing: border-box;
   user-select: none;
+  overflow-x: hidden;
 }
 
 @media (prefers-color-scheme: dark) {

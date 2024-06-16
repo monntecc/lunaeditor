@@ -1,22 +1,39 @@
 <script setup lang="ts">
-import { ITabInfo } from './models/ITabInfo';
+import type { ITabInfo } from './models/ITabInfo';
 
-const props = withDefaults(defineProps<ITabInfo>(), {});
-const emit = defineEmits(['close', 'set-active']);
-
-function handleSetActive() {
-  emit('set-active', props.id);
+export interface EditorTabComponentProps {
+  tab: ITabInfo;
+  active?: boolean;
 }
 
-function handleClose() {
-  emit('close', props.id);
-}
+const props = withDefaults(defineProps<EditorTabComponentProps>(), {});
+
+const emit = defineEmits<{
+  (e: 'set-active', id: string): void;
+  (e: 'close', id: string): void;
+}>();
+
+const handleSetActive = (id: string): void => emit('set-active', id);
+const handleClose = (id: string): void => emit('close', id);
+
+const auxClose = (event: MouseEvent): void => {
+  event.preventDefault();
+  if (event.button === 1) {
+    handleClose(props.tab.id);
+  }
+};
 </script>
 
 <template>
-  <div class="tab" :class="{ 'active-tab': props.isActive }" @click="handleSetActive" :title="props.name">
-    <span class="tab-title"> {{ props.name }}</span>
-    <span class="close-tab" @click.stop="handleClose">✖</span>
+  <div
+    class="tab"
+    :class="{ 'active-tab': active }"
+    @click="handleSetActive(tab.id)"
+    :title="tab.name"
+    @auxclick="auxClose"
+  >
+    <span class="tab-title"> {{ tab.name }}</span>
+    <span class="close-tab material-icons" @click.stop="handleClose(tab.id)">close</span>
   </div>
 </template>
 
@@ -34,7 +51,6 @@ function handleClose() {
   cursor: pointer;
 
   &.active-tab {
-    padding: 5px 10px;
     background-color: #000205;
     border-top: 1px solid #000205;
     z-index: 9999;
@@ -70,9 +86,10 @@ function handleClose() {
   .close-tab {
     cursor: pointer;
     margin-left: 10px;
+    font-size: 20px;
 
     &:hover {
-      color: red;
+      color: #ff8484;
     }
   }
 }

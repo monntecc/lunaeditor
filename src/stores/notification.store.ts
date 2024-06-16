@@ -15,6 +15,9 @@ export const useNotificationStore = defineStore('notification', {
   actions: {
     show(n: INotification): void {
       this.active.push(n);
+      setTimeout((): void => {
+        this.close(n.id);
+      }, 3000);
     },
     close(id: string): void {
       const index: number = this.active.findIndex((n: INotification): boolean => n.id === id);
