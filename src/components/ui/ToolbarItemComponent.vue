@@ -4,6 +4,7 @@ import { ref } from 'vue';
 
 export interface ToolbarItemComponentProps {
   bar: IToolbarBar;
+  active?: boolean;
 }
 
 withDefaults(defineProps<ToolbarItemComponentProps>(), {});
@@ -22,8 +23,8 @@ const click = (): void => emit('click');
 </script>
 
 <template>
-  <div class="toolbar-bar" @mouseenter="setHovered()" @mouseleave="setHovered()" @click="click()">
-    <span class="material-icons">{{ bar.icon }}</span>
+  <div class="toolbar-bar" :class="active ? 'active' : ''" @click="click()">
+    <span class="material-icons" @mouseenter="setHovered()" @mouseleave="setHovered()">{{ bar.icon }}</span>
     <div class="placeholder" :class="hovered ? 'show' : ''">{{ bar.placeholder }}</div>
   </div>
 </template>
@@ -33,7 +34,6 @@ const click = (): void => emit('click');
   position: relative;
   display: flex;
   padding: 4px 6px;
-  border-radius: 8px;
   cursor: pointer;
 
   &:hover {
@@ -46,7 +46,7 @@ const click = (): void => emit('click');
 
   .placeholder {
     position: absolute;
-    left: 44px;
+    left: 40px;
     top: 6px;
     opacity: 0;
     width: 0;
@@ -57,11 +57,11 @@ const click = (): void => emit('click');
     background-color: #e3e3e3;
     color: #0f0f0f;
     padding: 4px 8px;
-    border-radius: 4px;
     font-size: 12px;
     box-shadow:
-      rgba(0, 0, 0, 0.16) 0 10px 36px 0,
-      rgba(0, 0, 0, 0.06) 0 0 0 1px;
+      rgba(201, 201, 201, 0.4) 0 10px 36px 0,
+      rgba(203, 203, 203, 0.2) 0 0 0 1px;
+    pointer-events: none;
 
     &.show {
       opacity: unset;
@@ -83,7 +83,7 @@ const click = (): void => emit('click');
     }
 
     &.active {
-      background-color: #2a2a2a;
+      background-color: #343434;
     }
   }
 }
