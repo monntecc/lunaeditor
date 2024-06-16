@@ -12,7 +12,7 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use serde::{Deserialize, Serialize};
 use log::{error, info};
-use tauri::{App, Manager};
+use tauri::App;
 
 static mut SETTINGS_FOUND: bool = false;
 
