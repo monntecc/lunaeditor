@@ -13,7 +13,7 @@ withDefaults(defineProps<TitlebarMenuOptionComponentProps>(), {});
 <template>
   <div class="titlebar-menu-option" @click="option.onInteract">
     <span>{{ option.title }}</span>
-    <KbdComponent v-if="option.shortcut" :shortcut="option.shortcut" />
+    <KbdComponent v-if="option.shortcut" :shortcut="option.shortcut" :simple="true" />
   </div>
 </template>
 
@@ -22,11 +22,12 @@ withDefaults(defineProps<TitlebarMenuOptionComponentProps>(), {});
 
 .titlebar-menu-option {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 40px;
+  text-wrap: nowrap;
 
-  padding: 6px 8px;
+  padding: 4px 6px;
   cursor: pointer;
   user-select: none;
   margin: 1px;

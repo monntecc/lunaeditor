@@ -1,5 +1,6 @@
 import type { ITitlebarMenu } from '@/components/system/models';
-import { closeApp, openFile, closeFile } from '@/components/system/actions';
+import { closeApp } from '@/components/system/actions';
+import { useFileStore } from '@/stores/file.store.ts';
 
 export const titlebarMenus: ITitlebarMenu[] = [
   {
@@ -7,13 +8,36 @@ export const titlebarMenus: ITitlebarMenu[] = [
     options: [
       {
         title: 'Open',
-        onInteract: openFile,
+        onInteract: async (): Promise<void> => {
+          const fileStore = useFileStore();
+          await fileStore.openFile();
+        },
         shortcut: 'ctrl + o'
       },
       {
-        title: 'Close all',
-        onInteract: closeFile,
-        shortcut: 'ctrl + p + a'
+        title: 'New',
+        onInteract: (): void => {
+          const fileStore = useFileStore();
+          fileStore.newFile();
+        },
+        shortcut: 'ctrl + n'
+      },
+      {
+        title: 'Save',
+        onInteract: async (): Promise<void> => {
+          const fileStore = useFileStore();
+          await fileStore.saveActive();
+        },
+        shortcut: 'ctrl + s'
+      },
+      {
+        title: 'Close active',
+        onInteract: (): void => {
+          const fileStore = useFileStore();
+          if (!fileStore.active || !fileStore.active.tabId) return;
+          fileStore.closeFile(fileStore.active.tabId);
+        },
+        shortcut: 'ctrl + w'
       },
       {
         title: 'Exit',

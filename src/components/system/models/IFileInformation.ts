@@ -10,4 +10,6 @@ export interface IFileInformation {
   text: string;
   // File content in bytes
   bytes: number[];
+  // Tab ID (optional)
+  tabId?: string;
 }

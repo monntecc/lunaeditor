@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import ToolbarItemComponent from '@/components/ui/ToolbarItemComponent.vue';
 
@@ -11,8 +11,8 @@ const emit = defineEmits<{
   (e: 'bar-clicked', bar: EToolbarElType | null): void;
 }>();
 
+const tabWrapper = ref<HTMLDivElement | null>(null);
 const bars = ref<IToolbarBar[]>(toolbarBars);
-
 const settingsBar = ref<IToolbarBar>({
   icon: 'tune',
   placeholder: 'Editor settings',
@@ -32,7 +32,7 @@ const emitClick = (bar: EToolbarElType): void => {
 </script>
 
 <template>
-  <section class="toolbar-wrapper">
+  <section class="toolbar-wrapper" ref="tabWrapper">
     <div class="toolbar-bars">
       <template v-for="bar in bars">
         <ToolbarItemComponent :active="barClicked === bar.type" :bar="bar" @click="emitClick(bar.type)" />

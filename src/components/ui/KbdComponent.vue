@@ -1,13 +1,15 @@
 <script setup lang="ts">
 export interface KbdComponentProps {
   shortcut: string;
+  // Option without background and padding
+  simple: boolean;
 }
 
 withDefaults(defineProps<KbdComponentProps>(), {});
 </script>
 
 <template>
-  <kbd class="kbd">{{ shortcut }}</kbd>
+  <kbd class="kbd" :class="{ simple }">{{ shortcut }}</kbd>
 </template>
 
 <style scoped lang="scss">
@@ -20,6 +22,11 @@ withDefaults(defineProps<KbdComponentProps>(), {});
   border-radius: 4px;
   border-color: rgb(229 231 235);
   text-wrap: nowrap;
+
+  &.simple {
+    background-color: unset;
+    border: unset;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
