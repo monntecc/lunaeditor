@@ -22,8 +22,8 @@ const click = (): void => emit('click');
 </script>
 
 <template>
-  <div class="toolbar-bar" @mouseenter="setHovered()" @mouseleave="setHovered()" @click="click()">
-    <span class="material-icons">{{ bar.icon }}</span>
+  <div class="toolbar-bar" @click="click()">
+    <span class="material-icons" @mouseenter="setHovered()" @mouseleave="setHovered()">{{ bar.icon }}</span>
     <div class="placeholder" :class="hovered ? 'show' : ''">{{ bar.placeholder }}</div>
   </div>
 </template>
@@ -62,6 +62,7 @@ const click = (): void => emit('click');
     box-shadow:
       rgba(0, 0, 0, 0.16) 0 10px 36px 0,
       rgba(0, 0, 0, 0.06) 0 0 0 1px;
+    pointer-events: none;
 
     &.show {
       opacity: unset;
