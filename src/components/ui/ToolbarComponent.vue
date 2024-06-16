@@ -3,22 +3,39 @@ import { ref } from 'vue';
 
 import ToolbarItemComponent from '@/components/ui/ToolbarItemComponent.vue';
 
-import type { IToolbarBar } from '@/components/ui/models';
+import { EToolbarElType, IToolbarBar } from '@/components/ui/models';
 
 import { toolbarBars } from '@/components/ui/data';
 
+const emit = defineEmits<{
+  (e: 'bar-clicked', bar: EToolbarElType | null): void;
+}>();
+
 const bars = ref<IToolbarBar[]>(toolbarBars);
+
 const settingsBar = ref<IToolbarBar>({
   icon: 'tune',
-  placeholder: 'Editor settings'
+  placeholder: 'Editor settings',
+  type: EToolbarElType.NONE
 });
+
+const barClicked = ref<EToolbarElType | null>(null);
+const emitClick = (bar: EToolbarElType): void => {
+  emit('bar-clicked', bar);
+
+  if (barClicked.value === bar) {
+    barClicked.value = null;
+  } else {
+    barClicked.value = bar;
+  }
+};
 </script>
 
 <template>
   <section class="toolbar-wrapper">
     <div class="toolbar-bars">
       <template v-for="bar in bars">
-        <ToolbarItemComponent :bar="bar" />
+        <ToolbarItemComponent :active="barClicked === bar.type" :bar="bar" @click="emitClick(bar.type)" />
       </template>
     </div>
     <div class="settings-bar">
@@ -29,7 +46,7 @@ const settingsBar = ref<IToolbarBar>({
 
 <style scoped lang="scss">
 .toolbar-wrapper {
-  width: 40px;
+  width: 36px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
