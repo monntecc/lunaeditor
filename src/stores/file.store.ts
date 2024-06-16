@@ -95,7 +95,9 @@ export const useFileStore = defineStore('file', {
       const name: string = splitPath.pop() ?? '';
       this.active.name = name;
       // Replace also in opened tabs
-      const index: number = this.opened.findIndex((file: IFileInformation): boolean => file.tabId === this.active?.tabId);
+      const index: number = this.opened.findIndex(
+        (file: IFileInformation): boolean => file.tabId === this.active?.tabId
+      );
       this.opened[index].name = name;
     },
     async saveActive(): Promise<void> {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue';
 
-const lastWidth = ref<number>(320);
 const isResizing = ref<boolean>(false);
 const sidenav = ref<HTMLDivElement | null>(null);
 
