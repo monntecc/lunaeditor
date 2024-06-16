@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { withDefaults, defineProps, defineEmits } from 'vue';
 import { ITabInfo } from './models/ITabInfo';
 
 const props = withDefaults(defineProps<ITabInfo>(), {});
@@ -16,7 +15,7 @@ function handleClose() {
 
 <template>
   <div class="tab" :class="{ 'active-tab': props.isActive }" @click="handleSetActive" :title="props.name">
-    <span class="tab-title" :name="props.name">{{ props.name }}</span>
+    <span class="tab-title"> {{ props.name }}</span>
     <span class="close-tab" @click.stop="handleClose">✖</span>
   </div>
 </template>
@@ -38,7 +37,6 @@ function handleClose() {
     padding: 5px 10px;
     background-color: #000205;
     border-top: 1px solid #000205;
-    border-color: #000205;
     z-index: 9999;
 
     &::before,
@@ -52,12 +50,12 @@ function handleClose() {
     }
 
     &::before {
-      bottom: 0px;
+      bottom: 0;
       left: -2px;
     }
 
     &::after {
-      bottom: 0px;
+      bottom: 0;
       right: -2px;
     }
   }

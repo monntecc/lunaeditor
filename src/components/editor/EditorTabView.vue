@@ -40,11 +40,11 @@ function closeTab(id: string) {
   }
 }
 
-function addTab() {
-  const newId = (tabs.value.length ? parseInt(tabs.value[tabs.value.length - 1].id) + 1 : 1).toString();
-  tabs.value.push({ id: newId, name: 'New Tab' });
-  activeTabId.value = newId;
-}
+// function addTab() {
+//   const newId = (tabs.value.length ? parseInt(tabs.value[tabs.value.length - 1].id) + 1 : 1).toString();
+//   tabs.value.push({ id: newId, name: 'New Tab' });
+//   activeTabId.value = newId;
+// }
 
 function setActiveTab(id: string) {
   activeTabId.value = id;
