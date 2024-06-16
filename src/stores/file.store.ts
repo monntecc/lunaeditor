@@ -20,6 +20,7 @@ export const useFileStore = defineStore('file', {
     closeFile(): void {
       // TODO: Implement
       this.opened = [];
-    }
+    },
+    getFilesAsTabs() {}
   }
 });

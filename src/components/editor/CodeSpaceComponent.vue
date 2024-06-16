@@ -3,6 +3,7 @@ import { onMounted, ref, shallowRef, watch } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useCodeStore } from '@/stores/code.store';
 import { useFileStore } from '@/stores/file.store';
+import EditorTabView from '@/components/editor/EditorTabView.vue';
 
 export interface CodePayload {
   view: any; // eslint-disable-line
@@ -42,6 +43,7 @@ const onBlur = (event: unknown) => {
 </script>
 
 <template>
+  <EditorTabView />
   <Codemirror
     v-model="content"
     placeholder="Code goes here..."
