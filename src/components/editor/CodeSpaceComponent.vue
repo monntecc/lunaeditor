@@ -2,7 +2,7 @@
 import { onMounted, ref, shallowRef, watch } from 'vue';
 import { Codemirror } from 'vue-codemirror';
 import { useCodeStore } from '@/stores/code.store';
-import { useFileStore } from '@/stores/file.store.ts';
+import { useFileStore } from '@/stores/file.store';
 
 export interface CodePayload {
   view: any; // eslint-disable-line

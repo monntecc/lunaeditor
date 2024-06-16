@@ -12,7 +12,9 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use serde::{Deserialize, Serialize};
 use log::{error, info};
-use tauri::App;
+use tauri::{App, Manager};
+
+static mut SETTINGS_FOUND: bool = false;
 
 #[derive(Hash, Eq, PartialEq, Debug, Serialize, Deserialize, Default)]
 struct FileInformation {
@@ -162,6 +164,13 @@ fn write_file(path: &str, content: &str) {
     }
 }
 
+#[tauri::command]
+fn settings_availability() -> bool {
+    unsafe {
+        SETTINGS_FOUND
+    }
+}
+
 fn load_settings(app: &mut App) {
     info!("Load default editor settings...");
 
@@ -178,10 +187,16 @@ fn load_settings(app: &mut App) {
 
     // If settings file does not exist, create new one
     if !settings_path.try_exists().unwrap() {
-        fs::write(&settings_path, settings.to_string()).unwrap();
+        fs::write(&settings_path, serde_json::to_string_pretty(&settings).unwrap()).unwrap();
         info!("Settings does not present. Created a new one configuration file. Path: {:?}", &settings_path);
+        unsafe {
+            SETTINGS_FOUND = false;
+        }
     } else {
         info!("Settings found in path: '{:?}'", &settings_path);
+        unsafe {
+            SETTINGS_FOUND = true;
+        }
     }
 
     // Save settings data to tauri store
@@ -213,7 +228,8 @@ fn main() {
             is_directory,
             delete_file,
             read_file,
-            write_file
+            write_file,
+            settings_availability
         ])
         .plugin(tauri_plugin_fs_watch::init())
         .plugin(tauri_plugin_store::Builder::default().build())

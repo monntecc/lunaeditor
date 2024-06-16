@@ -35,12 +35,14 @@
     "codemirror": "^6.0.1",
     "pinia": "^2.1.7",
     "thememirror": "^2.0.1",
+    "uuid": "^10.0.0",
     "vue": "^3.3.4",
     "vue-codemirror": "^6.1.1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1",
     "@types/node": "^20.14.2",
+    "@types/uuid": "^9.0.8",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-typescript": "^13.0.0",
     "eslint": "8.57.0",
