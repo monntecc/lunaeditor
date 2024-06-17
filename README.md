@@ -1,16 +1,24 @@
-# Tauri + Vue + TypeScript
+# Luna Editor
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Description
 
-## Recommended IDE Setup
+Luna Editor is.. Text editor. Now it's yet another text editor, but we are planning to add many functionality, to make this as enjoyable as possible. 
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+## System requirements:
+### Windows:
+- Windows 10 or newer
 
-## Type Support For `.vue` Imports in TS
+### Linux:
+- Soon
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+### Mac OS:
+- Soon
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+## If you want to help..
+We would be more than happy if you can just use this and give feedbacks about experience, bugs, and what we can add to this app.
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+If you want to help with the code, here are some things you would need before this:
+- We are using Tauri as the base for the application. So you would need [Cargo](https://doc.rust-lang.org/cargo/), [Build tools](https://visualstudio.microsoft.com/downloads/?q=build+tools) and [node.js](https://nodejs.org/en/).
+- Recomended IDE with plugins are [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+
+With this setup, you can go to [issues](https://github.com/monntecc/lunaeditor/issues) and look for what you can do. Before commiting check if everything is working, and run `yarn run lint`
