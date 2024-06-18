@@ -11,8 +11,14 @@ withDefaults(defineProps<CodeStatusbarComponentProps>(), {});
 <template>
   <footer class="editor-statusbar">
     <div class="wrapper">
-      <span>Line: {{ data.line }}</span>
-      <span>Column: {{ data.column }}</span>
+      <template v-if="data.selectedChars && data.selectedChars > 0">
+        <span>Selected Chars: {{ data.selectedChars }}</span>
+        <span>Selected Columns: {{ data.selectedColumns }}</span>
+      </template>
+      <template v-else>
+        <span>Line: {{ data.line }}</span>
+        <span>Column: {{ data.column }}</span>
+      </template>
     </div>
     <div class="wrapper">
       <span>Tab Size: {{ data.tabSize }}</span>
