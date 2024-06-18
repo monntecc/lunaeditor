@@ -5,4 +5,6 @@ export interface ICodeData {
   column: number;
   tabSize: number;
   lang: ECodeLang;
+  selectedChars?: number;
+  selectedColumns?: number;
 }

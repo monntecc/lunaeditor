@@ -33,7 +33,9 @@ const codeData = ref<ICodeData>({
   tabSize: 2,
   column: 1,
   line: 1,
-  lang: ECodeLang.PLAIN
+  lang: ECodeLang.PLAIN,
+  selectedChars: 0,
+  selectedColumns: 0
 });
 
 const saveActiveUsingKeyboard = async (event: KeyboardEvent): Promise<void> => {
@@ -68,11 +70,17 @@ const onUpdate = (event: unknown) => {
   const state: EditorState = (event as any).state; // eslint-disable-line
   const cursorLine = state.doc.lineAt(state.selection.main.head);
   const cursorPos = state.selection.ranges[0].from;
+  const selection = state.selection.main;
+  const selectedText = state.doc.sliceString(selection.from, selection.to);
+  const selectedColumns = selectedText.split('\n').length;
+
   codeData.value = {
     line: cursorLine.number,
     tabSize: state.tabSize,
     column: cursorPos - cursorLine.from,
-    lang: codeStore.lang
+    lang: codeStore.lang,
+    selectedChars: selectedText.replace(/\n/g, '').length,
+    selectedColumns
   };
 };
 </script>
