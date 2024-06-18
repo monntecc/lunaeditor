@@ -87,7 +87,44 @@ export const useFileStore = defineStore('file', {
     },
     async saveActiveAs(): Promise<void> {
       if (!this.active) return;
-      const path: string | string[] | null = await dialog.save({ title: 'Save file as' });
+      const path: string | string[] | null = await dialog.save({
+        // TODO: After adding file type to editor, change default to selected file type
+        title: 'Save file as',
+        filters: [
+          {
+            name: 'Plain Text',
+            extensions: ['txt']
+          },
+          {
+            name: 'Rust File',
+            extensions: ['rs']
+          },
+          {
+            name: 'JavaScript File',
+            extensions: ['js', 'mjs']
+          },
+          {
+            name: 'Markdown File',
+            extensions: ['md']
+          },
+          {
+            name: 'Cascading Style Sheets File',
+            extensions: ['css', 'scss', 'sass']
+          },
+          {
+            name: 'HyperText Markup Language File',
+            extensions: ['html', 'hml']
+          },
+          {
+            name: 'JavaScript Object Notation File',
+            extensions: ['json']
+          },
+          {
+            name: 'Vue File',
+            extensions: ['vue']
+          }
+        ]
+      });
       const content: string = this.active.text;
       await this.saveFile(path as string, content);
       // Replace active with new name
