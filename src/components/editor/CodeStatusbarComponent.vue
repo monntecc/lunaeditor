@@ -32,7 +32,7 @@ withDefaults(defineProps<CodeStatusbarComponentProps>(), {});
 
 <style scoped lang="scss">
 .editor-statusbar {
-  width: 100%;
+  width: calc(100vw - 33px);
   display: flex;
   justify-content: space-between;
   align-items: center;
