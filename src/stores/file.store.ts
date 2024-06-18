@@ -39,7 +39,7 @@ export const useFileStore = defineStore('file', {
       const file: IFileInformation = {
         tabId,
         name: 'Untitled.txt',
-        dir: 'C:/Users/Default/Documents/Untitled.txt',
+        dir: 'C:/Users/Default/Documents/',
         bytes: [],
         extension: 'txt',
         text: ''
@@ -126,16 +126,19 @@ export const useFileStore = defineStore('file', {
         ]
       });
       const content: string = this.active.text;
+      console.log(path);
       await this.saveFile(path as string, content);
       // Replace active with new name
       const splitPath: string[] = (path as string).split('\\');
       const name: string = splitPath.pop() ?? '';
       this.active.name = name;
+      this.active.dir = (path as string).replace(name, '');
       // Replace also in opened tabs
       const index: number = this.opened.findIndex(
         (file: IFileInformation): boolean => file.tabId === this.active?.tabId
       );
       this.opened[index].name = name;
+      this.opened[index].dir = (path as string).replace(name, '');
     },
     async saveActive(): Promise<void> {
       if (!this.active) {
