@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue';
 
 import EditorView from '@/views/EditorView.vue';
+import SettingsModal from '@/views/SettingsModal.vue';
 import TitlebarComponent from '@/components/system/TitlebarComponent.vue';
 import ToolbarComponent from '@/components/ui/ToolbarComponent.vue';
 import NotificationPanelComponent from '@/components/ui/NotificationPanelComponent.vue';
@@ -33,6 +34,7 @@ const isLogsOpened = (): boolean => openedBar.value === EToolbarElType.EDITOR_LO
 
 <template>
   <TitlebarComponent />
+  <SettingsModal />
   <main class="wrapper">
     <ToolbarComponent @bar-clicked="onBarClick" />
 
