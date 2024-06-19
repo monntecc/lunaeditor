@@ -7,6 +7,8 @@ import { EToolbarElType, IToolbarBar } from '@/components/ui/models';
 
 import { toolbarBars } from '@/components/ui/data';
 
+import { openModal } from '@/views/events/settingsEvent';
+
 const emit = defineEmits<{
   (e: 'bar-clicked', bar: EToolbarElType | null): void;
 }>();
@@ -39,7 +41,7 @@ const emitClick = (bar: EToolbarElType): void => {
       </template>
     </div>
     <div class="settings-bar">
-      <ToolbarItemComponent :bar="settingsBar" />
+      <ToolbarItemComponent :bar="settingsBar" @click="openModal" />
     </div>
   </section>
 </template>
