@@ -2,6 +2,8 @@
 import { ref, watch } from 'vue';
 import { isModalOpen, closeModal } from './events/settingsEvent';
 
+import LNumberInput from '@/components/elements/LNumberInput.vue';
+
 const isOpen = ref(isModalOpen.value);
 
 watch(isModalOpen, (newVal) => {
@@ -21,6 +23,7 @@ const handleWrapperClick = (event: MouseEvent) => {
     <div class="modal-backdrop">
       <div class="settings-modal" @click.stop>
         <h1>Settings</h1>
+        <LNumberInput title="test" />
       </div>
     </div>
   </div>
@@ -48,7 +51,7 @@ const handleWrapperClick = (event: MouseEvent) => {
 }
 
 .settings-modal {
-  background-color: rgb(26, 27, 52);
+  background-color: #1e1b2b;
   border: 2px solid black;
   border-radius: 10px;
   width: 80vw;
