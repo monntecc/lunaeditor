@@ -43,6 +43,8 @@ export class FileService {
     };
     this.opened.set([...this.opened(), file]);
     this.active.set(file);
+    console.log(this.opened());
+    console.log(this.active());
   }
 
   public async open(): Promise<void> {
@@ -57,6 +59,8 @@ export class FileService {
     const tab: FileInformation = { tabId, ...file };
     this.opened.set([...this.opened(), tab]);
     this.active.set(tab);
+    console.log(this.opened());
+    console.log(this.active());
   }
 
   public close(id: string): void {
