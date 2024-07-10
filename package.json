@@ -2,7 +2,13 @@
   "name": "@luna/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "tauri": "tauri",
+    "start:app": "tauri dev",
+    "build:app": "tauri build",
+    "start:web": "npx nx run editor:serve --configuration development --host=0.0.0.0 --port=4200 --disable-host-check",
+    "build:web": "npx nx run editor:build --configuration production"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~18.0.0",
