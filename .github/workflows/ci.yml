@@ -13,7 +13,17 @@ permissions:
   contents: read
 
 jobs:
-  ci:
+  tauri:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
+
+      - run: cargo check --target-dir "/home/runner/work/lunaeditor/lunaeditor/libs/luna-api"
+  nx:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,16 +51,3 @@ jobs:
 
       # Lint, test and build
       - run: npx nx run-many -t lint test build --all --skip-nx-cache
-
-      # Cargo configuration
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
-          components: rustfmt, clippy
-
-      - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check --target-dir "/home/runner/work/lunaeditor/lunaeditor/libs/luna-api"
-
