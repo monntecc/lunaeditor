@@ -9,12 +9,12 @@ edition = "2021"
 rust-version = "1.60"
 
 [build-dependencies]
-tauri-build = { version = "1.5.3" }
+tauri-build = { version = "1.5.3", features = [] }
 
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.7.0" }
+tauri = { version = "1.7.0", features = ["clipboard-read-text", "clipboard-write-text", "dialog-ask", "dialog-confirm", "dialog-open", "dialog-save", "fs-copy-file", "fs-create-dir", "fs-exists", "fs-read-dir", "fs-read-file", "fs-rename-file", "fs-write-file", "path-all", "process-exit", "process-relaunch", "shell-open", "window-center", "window-close", "window-create", "window-hide", "window-maximize", "window-minimize", "window-print", "window-set-decorations", "window-set-focus", "window-set-fullscreen", "window-set-icon", "window-show", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
