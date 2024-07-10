@@ -4,7 +4,7 @@
     "beforeBuildCommand": "npm run build:web",
     "beforeDevCommand": "npm run start:web",
     "devPath": "http://localhost:4200",
-    "distDir": "../../dist"
+    "distDir": "../../dist/apps/editor/browser"
   },
   "package": {
     "productName": "luna-editor",
