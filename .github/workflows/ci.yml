@@ -26,7 +26,7 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - run: cargo check --target-dir "/home/runner/work/lunaeditor/lunaeditor/libs/luna-api"
+      - run: cd libs/luna-api && cargo check
   nx:
     runs-on: ubuntu-latest
     steps:
