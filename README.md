@@ -1,5 +1,7 @@
 # Luna Editor
 
+CI status: [![CI](https://github.com/monntecc/lunaeditor/actions/workflows/ci.yml/badge.svg)](https://github.com/monntecc/lunaeditor/actions/workflows/ci.yml)
+
 ## Description
 
 Luna Editor is.. Text editor. Now it's yet another text editor, but we are planning to add many functionality, to make this as enjoyable as possible.
