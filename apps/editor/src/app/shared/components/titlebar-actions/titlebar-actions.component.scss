@@ -1,0 +1,24 @@
+@import '../../../../assets/styles/theme';
+
+.titlebar-actions {
+  display: block;
+  height: 32px;
+}
+
+.titlebar-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+
+  &:hover {
+    background: $accent;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .titlebar-icon ::ng-deep.mat-icon svg {
+    fill: #c2c2c2;
+  }
+}

@@ -1,0 +1,15 @@
+<div class="titlebar-menu" (mouseenter)="toggleHovered()" (mouseleave)="toggleHovered()">
+  <div class="titlebar-menu-title">{{ menu.title }}</div>
+  @if (hovered()) {
+    <div class="titlebar-menu-options">
+      @for (option of menu.options; track option.title) {
+        <div class="titlebar-menu-option" (click)="option.onInteract($event)">
+          <span>{{ option.title }}</span>
+          @if (option.shortcut) {
+            <luna-kbd [shortcut]="option.shortcut" [simple]="true" />
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

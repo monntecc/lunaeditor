@@ -2,27 +2,35 @@
   "name": "editor",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "app",
+  "prefix": "luna",
   "sourceRoot": "apps/editor/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/editor",
         "index": "apps/editor/src/index.html",
         "browser": "apps/editor/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/editor/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
             "input": "apps/editor/public"
-          }
+          },
+          "apps/editor/src/assets"
         ],
-        "styles": ["apps/editor/src/styles.scss"],
+        "styles": [
+          "@angular/material/prebuilt-themes/azure-blue.css",
+          "apps/editor/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -72,7 +80,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/editor/jest.config.ts"
       }

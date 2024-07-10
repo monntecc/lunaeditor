@@ -1,0 +1,13 @@
+.titlebar-logo {
+  position: relative;
+  margin-right: 40px;
+
+  img {
+    position: absolute;
+    width: 64px;
+    height: 48px;
+    left: -10px;
+    top: -10px;
+    transform: rotate(20deg);
+  }
+}

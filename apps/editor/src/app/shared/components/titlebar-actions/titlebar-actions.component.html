@@ -1,0 +1,7 @@
+<section class="titlebar-actions">
+  @for (action of actions(); track action.name) {
+    <div class="titlebar-icon" (click)="interact(action.name)">
+      <mat-icon [style.width]="'18px'" [style.height]="'18px'" [svgIcon]="action.icon"></mat-icon>
+    </div>
+  }
+</section>
