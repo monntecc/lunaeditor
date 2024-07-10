@@ -1,13 +1,15 @@
 {
   "name": "@luna/source",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "tauri": "tauri",
     "start:app": "tauri dev",
     "build:app": "tauri build",
     "start:web": "npx nx run editor:serve --configuration development --host=0.0.0.0 --port=4200 --disable-host-check",
-    "build:web": "npx nx run editor:build --configuration production"
+    "build:web": "npx nx run editor:build --configuration production",
+    "lint": "npx nx run-many -t lint --all",
+    "format": "npx prettier --write apps/editor/ libs/luna-ui/"
   },
   "private": true,
   "dependencies": {

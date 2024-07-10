@@ -3,7 +3,9 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - latest
+      - refactor
+      - dev
   pull_request:
 
 permissions:
@@ -11,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  main:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,9 +30,27 @@ jobs:
           node-version: 20
           cache: 'npm'
 
+      # Install deps
+      - run: npm install --quiet
+
+      # Run CI
       - run: npm ci
       - uses: nrwl/nx-set-shas@v4
+        with:
+          main-branch-name: latest
 
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      - run: npx nx affected -t lint test build
+      # Lint, test and build
+      - run: npx nx run-many -t lint test build --all --skip-nx-cache
+
+      # Cargo configuration
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
+
+      - name: Run cargo check
+        uses: actions-rs/cargo@v1
+        with:
+          command: check
+
