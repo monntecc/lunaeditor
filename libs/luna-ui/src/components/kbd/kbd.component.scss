@@ -1,0 +1,19 @@
+.kbd {
+  padding: 4px 6px;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgb(31 41 55);
+  background-color: rgb(243, 244, 246);
+  border-radius: 4px;
+  border-color: rgb(229 231 235);
+  text-wrap: nowrap;
+
+  &.simple {
+    background-color: unset;
+    border: unset;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+}

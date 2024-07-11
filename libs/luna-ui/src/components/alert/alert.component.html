@@ -1,0 +1,11 @@
+<div class="alert-wrapper">
+  <mat-icon [style]="data.action === 'confirm' ? 'color:green;' : 'color:red;'">
+    {{ data.action === 'confirm' ? 'check_circle_outline' : 'error' }}
+  </mat-icon>
+  <div class="spacer"></div>
+  <span class="alert-message">{{ data.message }}</span>
+  <div class="spacer"></div>
+  <button style="display: flex" mat-icon-button (click)="dismiss()">
+    <mat-icon class="close" data-cy="close-toast">close</mat-icon>
+  </button>
+</div>

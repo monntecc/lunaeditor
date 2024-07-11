@@ -1,1 +1,48 @@
-@import 'assets/styles/base';
+@import 'assets/styles/scrollbar';
+@import 'material-icons/iconfont/material-icons';
+@import '../../../libs/luna-ui/src/assets/theme/luna';
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/static/Inter-Regular.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  src: url('/assets/fonts/static/Inter-Medium.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/assets/fonts/static/Inter-SemiBold.ttf') format('woff2');
+}
+
+* {
+  user-select: none;
+  font-family: 'Inter', sans-serif;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  min-width: 1px;
+  font-weight: 500;
+  font-size: 12px;
+  box-sizing: border-box;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+input {
+  user-select: auto !important;
+}
+
+.selectable {
+  user-select: text !important;
+}

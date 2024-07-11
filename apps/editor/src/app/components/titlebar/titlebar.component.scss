@@ -1,0 +1,19 @@
+.titlebar-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  user-select: none;
+  padding: 0 10px;
+  z-index: 9999;
+  background: rgb(226, 226, 226);
+  background: linear-gradient(
+      90deg,
+      rgba(226, 226, 226, 1) 0%,
+      rgba(232, 232, 232, 0.9332107843137255) 65%,
+      rgba(231, 231, 231, 1) 90%
+  );
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}

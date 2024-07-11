@@ -2,7 +2,7 @@
   "name": "luna-ui",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/luna-ui/src",
-  "prefix": "lib",
+  "prefix": "luna",
   "projectType": "library",
   "tags": [],
   "targets": {
