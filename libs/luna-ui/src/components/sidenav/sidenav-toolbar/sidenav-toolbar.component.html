@@ -1,0 +1,7 @@
+<section class="sidenav-toolbar-wrapper">
+  <div class="sidenav-toolbar-items">
+    @for (item of items(); track item.type) {
+      <luna-sidenav-toolbar-item [active]="current() === item.type" (click)="select(item.type)" [icon]="item.icon" [placeholder]="item.placeholder" />
+    }
+  </div>
+</section>

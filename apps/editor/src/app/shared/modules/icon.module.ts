@@ -13,7 +13,8 @@ export class IconModule {
   readonly _icons: ReadonlyArray<string> = [
     'close',
     'minus',
-    'maximize'
+    'maximize',
+    'folder'
   ];
 
   constructor(private readonly domSanitizer: DomSanitizer, private readonly iconRegistry: MatIconRegistry) {

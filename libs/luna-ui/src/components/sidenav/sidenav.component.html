@@ -1,0 +1,16 @@
+<div class="sidenav-wrapper">
+  <luna-sidenav-toolbar [items]="sidenavItems" (selected)="openSidenav($event)"></luna-sidenav-toolbar>
+  @if (selected()) {
+    <div class="sidenav-content">
+      @switch (selected()) {
+        @case (SidenavToolbarItemType.FILE_TREE) {
+          <p>File tree</p>
+        }
+        @case (SidenavToolbarItemType.NONE) {
+          <p>Unknown selected item...</p>
+        }
+      }
+    </div>
+    <div class="resize-handle" data-target="aside" (mousedown)="startResizing($event)"></div>
+  }
+</div>

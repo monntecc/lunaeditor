@@ -1,0 +1,15 @@
+.sidenav-toolbar-item-wrapper {
+  position: relative;
+  display: flex;
+  padding: 5px;
+  border-radius: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #d3d3d3;
+  }
+
+  &.active {
+    background-color: #d3d3d3;
+  }
+}
