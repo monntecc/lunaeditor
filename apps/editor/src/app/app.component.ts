@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from './shared/modules/material.module';
 import { TitlebarComponent } from './components/titlebar/titlebar.component';
-import { SidenavComponent } from '@luna/luna-ui';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 @Component({
   standalone: true,

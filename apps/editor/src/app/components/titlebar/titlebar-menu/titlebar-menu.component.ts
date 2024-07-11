@@ -1,6 +1,6 @@
 import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { KbdComponent } from '../../../../../../../libs/luna-ui/src/components/kbd/kbd.component';
+import { KbdComponent } from '@luna/luna-ui';
 import { TitlebarMenu } from '../../../shared/interfaces/TitlebarMenu';
 
 @Component({
