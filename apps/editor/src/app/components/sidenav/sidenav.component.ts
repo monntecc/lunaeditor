@@ -60,8 +60,6 @@ export class SidenavComponent {
     // 2. Calculate the new width according to initial width and mouse movement
     const newWidth = this.resizingEvent.startingWidth + cursorDeltaX;
 
-    console.log(newWidth);
-
     // 3. Set the new width
     this.sidenavService.setSidenavWidth(newWidth);
   }

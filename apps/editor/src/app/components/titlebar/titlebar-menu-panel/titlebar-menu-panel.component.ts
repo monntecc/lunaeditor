@@ -11,20 +11,24 @@ import { TitlebarMenuComponent } from '../titlebar-menu/titlebar-menu.component'
   standalone: true,
   imports: [CommonModule, KbdComponent, TitlebarMenuComponent],
   templateUrl: './titlebar-menu-panel.component.html',
-  styleUrl: './titlebar-menu-panel.component.scss',
+  styleUrl: './titlebar-menu-panel.component.scss'
 })
 export class TitlebarMenuPanelComponent {
   menus: WritableSignal<TitlebarMenu[]> = signal([]);
 
 
   constructor(private readonly fileService: FileService, private readonly layoutService: LayoutService) {
+    this.initialize();
+  }
+
+  private initialize(): void {
     this.menus.set([
       {
         title: 'File',
         options: [
           {
             title: 'Open',
-            onInteract: (): void =>  {
+            onInteract: (): void => {
               this.fileService.open().catch();
             },
             shortcut: 'ctrl + o'
@@ -41,14 +45,16 @@ export class TitlebarMenuPanelComponent {
             onInteract: (): void => {
               this.fileService.saveActive().catch();
             },
-            shortcut: 'ctrl + s'
+            shortcut: 'ctrl + s',
+            // disabled: !this.fileService.activeFileId()
           },
           {
             title: 'Close active',
             onInteract: (): void => {
-              this.fileService.close(this.fileService.active()?.tabId as string);
+              this.fileService.close(this.fileService.activeFileId());
             },
-            shortcut: 'ctrl + w'
+            shortcut: 'ctrl + w',
+            // disabled: !this.fileService.activeFileId()
           },
           {
             title: 'Exit',

@@ -10,6 +10,6 @@ export interface FileInformation {
   text: string;
   // File content in bytes
   bytes: number[];
-  // Tab ID (optional)
-  tabId?: string;
+  // uuidv4 (optional)
+  id: string;
 }

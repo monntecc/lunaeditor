@@ -45,6 +45,11 @@
   margin: 1px;
   color: #0f0f0f;
 
+  &.disabled {
+    opacity: 0.75;
+    pointer-events: none;
+  }
+
   &:hover {
     color: #ffffff;
     background-color: rgb(var(--color-primary));

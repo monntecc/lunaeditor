@@ -3,7 +3,7 @@
   @if (hovered()) {
     <div class="titlebar-menu-options">
       @for (option of menu.options; track option.title) {
-        <div class="titlebar-menu-option" (click)="option.onInteract($event)">
+        <div class="titlebar-menu-option" (click)="option.onInteract($event)" [class.disabled]="option.disabled">
           <span>{{ option.title }}</span>
           @if (option.shortcut) {
             <luna-kbd [shortcut]="option.shortcut" [simple]="true" />

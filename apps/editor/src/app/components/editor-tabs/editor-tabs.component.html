@@ -1,0 +1,16 @@
+@if (fileService.opened().length > 0) {
+  <div class="editor-tabs">
+    <ul class="tabs-wrapper">
+      @for (tab of tabs; track tab) {
+        <li (click)="selectTab(tab)" [class.active]="tab.active()" [matTooltip]="fileService.pathById(tab.fileId)" matTooltipShowDelay="800">
+          <span>{{ tab.tabTitle }}</span>
+          <div class="tab-close" (click)="tab.close()">
+            <mat-icon svgIcon="close"></mat-icon>
+          </div>
+        </li>
+      }
+    </ul>
+    <ng-content></ng-content>
+  </div>
+
+}

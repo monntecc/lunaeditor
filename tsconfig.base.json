@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@luna/luna-ui": ["libs/luna-ui/src/index.ts"],
+      "@luna/luna-ui": ["libs/luna-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

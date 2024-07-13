@@ -1,0 +1,66 @@
+:host {
+  width: 100%;
+}
+
+.editor-tabs {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 45px);
+  height: 100%;
+}
+
+.tabs-wrapper {
+  overflow-x: auto;
+  background-color: rgb(var(--color-background));
+  text-decoration: none;
+  list-style: none;
+  height: 36px;
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  margin: 0;
+  padding: 0 5px;
+
+  li {
+    background-color :rgb(var(--color-base-20));
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 4px solid rgb(var(--color-background));
+    padding: 4px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      border-color: rgb(var(--color-primary));
+    }
+
+    .tab-close {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 14px;
+      height: 14px;
+      border-radius: 12px;
+      padding: 3px;
+
+      mat-icon {
+        width: 14px;
+        height: 14px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(var(--color-secondary));
+
+        ::ng-deep svg {
+          fill: #ffffff!important;
+        }
+      }
+    }
+  }
+}

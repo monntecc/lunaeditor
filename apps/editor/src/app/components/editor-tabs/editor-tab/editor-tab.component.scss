@@ -1,0 +1,12 @@
+:host:has(.editor-tab.active) {
+  height: calc(100% - 44px);
+}
+
+.editor-tab {
+  margin: 2px;
+  height: 100%;
+}
+
+::ng-deep .CodeMirror {
+  height: 100%;
+}

@@ -5,4 +5,6 @@ export interface TitlebarMenuOption {
   shortcut?: string;
   /// Mouse click event (will be called on click)
   onInteract: (event: MouseEvent) => void;
+  /// Disabled
+  disabled?: boolean;
 }

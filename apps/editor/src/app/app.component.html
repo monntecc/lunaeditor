@@ -2,5 +2,24 @@
 
 <div class="wrapper">
   <luna-sidenav></luna-sidenav>
-  <router-outlet></router-outlet>
+  <luna-editor-tabs>
+    @for (file of fileService.opened(); track file.id) {
+      <luna-editor-tab [tabTitle]="file.name" [fileId]="file.id">
+        <ngx-codemirror
+          [(ngModel)]="file.text"
+          [options]="{
+              autoFocus: true,
+              lineNumbers: true,
+              preserveScrollPosition: true,
+              lineWrapping: true,
+              tabSize: 4,
+              indentWithTabs: true,
+              theme: 'base16-light',
+              mode: 'javascript',
+            }"
+        ></ngx-codemirror>
+      </luna-editor-tab>
+    }
+  </luna-editor-tabs>
+<!--  <router-outlet></router-outlet>-->
 </div>
