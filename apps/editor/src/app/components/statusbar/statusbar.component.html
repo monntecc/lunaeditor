@@ -1,0 +1,19 @@
+@if (data) {
+  <footer class="editor-statusbar">
+    <div class="wrapper">
+      @if (data.selectedChars) {
+        <span>Selected Chars: {{ data.selectedChars }}</span>
+        <span>Selected Columns: {{ data.selectedColumns }}</span>
+      } @else {
+        <span>Line: {{ data.line }}</span>
+        <span>Column: {{ data.column }}</span>
+      }
+    </div>
+    <div class="wrapper">
+      <span>Tab Size: {{ data.tabSize }}</span>
+      <span>Language:
+        <span class="lang">{{ data.lang }}</span>
+    </span>
+    </div>
+  </footer>
+}

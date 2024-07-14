@@ -1,0 +1,21 @@
+.editor-statusbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 14px;
+  background-color: rgb(var(--color-background));
+
+  .wrapper {
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    .lang {
+      text-transform: capitalize;
+    }
+  }
+}

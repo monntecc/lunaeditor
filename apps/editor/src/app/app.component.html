@@ -1,13 +1,15 @@
 <luna-titlebar></luna-titlebar>
 
 <div class="wrapper">
-  <luna-sidenav></luna-sidenav>
-  <luna-editor-tabs>
-    @for (file of fileService.opened(); track file.id) {
-      <luna-editor-tab [tabTitle]="file.name" [fileId]="file.id">
-        <ngx-codemirror
-          [(ngModel)]="file.text"
-          [options]="{
+  <div class="code-area">
+    <luna-sidenav></luna-sidenav>
+    <luna-editor-tabs>
+      @for (file of fileService.opened(); track file.id) {
+        <luna-editor-tab [tabTitle]="file.name" [fileId]="file.id">
+          <ngx-codemirror
+            [(ngModel)]="file.text"
+            (cursorActivity)="onCodeChange($event)"
+            [options]="{
               autoFocus: true,
               lineNumbers: true,
               preserveScrollPosition: true,
@@ -17,9 +19,10 @@
               theme: 'base16-light',
               mode: 'javascript',
             }"
-        ></ngx-codemirror>
-      </luna-editor-tab>
-    }
-  </luna-editor-tabs>
-<!--  <router-outlet></router-outlet>-->
+          ></ngx-codemirror>
+        </luna-editor-tab>
+      }
+    </luna-editor-tabs>
+  </div>
+  <luna-statusbar [data]="cursorData()"></luna-statusbar>
 </div>
