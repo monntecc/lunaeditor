@@ -7,11 +7,12 @@
 use std::{env, fs};
 use std::collections::HashMap;
 use std::fs::File;
-use std::io::Write;
+use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use serde::{Deserialize, Serialize};
 use log::{error, info};
+use native_dialog::FileDialog;
 use tauri::App;
 
 static mut SETTINGS_FOUND: bool = false;
@@ -28,6 +29,57 @@ struct FileInformation {
     text: String,
     // File content in bytes
     bytes: Vec<u8>
+}
+
+#[derive(Hash, Eq, PartialEq, Debug, Serialize, Deserialize, Default)]
+struct TreeNode {
+    is_dir: bool,
+    file: FileInformation,
+    nodes: Vec<TreeNode>
+}
+
+#[tauri::command]
+fn open_folder(path: &str) {
+    let path = FileDialog::new()
+        .set_location("~/Desktop")
+        .show_open_single_dir()
+        .unwrap();
+
+    let path = match path {
+        Some(path) => path,
+        None => return,
+    };
+
+    let entries = fs::read_dir(path).unwrap();
+
+    for entry in entries {
+        match entry {
+            Ok(entry) => {
+                let file = File::open(entry.path());
+                match file {
+                    Ok(mut file) => {
+                        let mut buffer = Vec::new();
+                        let content = file.read_to_end(&mut buffer);
+                        match content {
+                            Ok(sz) => {
+                                println!("  got {} bytes", sz);
+                                // we should work with buffer here
+                            }
+                            Err(e) => {
+                                println!("  read error: {:?}", e);
+                            }
+                        }
+                    }
+                    Err(e) => {
+                        println!("  open error: {:?}", e);
+                    }
+                }
+            }
+            Err(e) => {
+                println!("  entry error: {:?}", e);
+            }
+        }
+    }
 }
 
 #[tauri::command]

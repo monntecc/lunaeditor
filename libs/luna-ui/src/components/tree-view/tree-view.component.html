@@ -1,0 +1,3 @@
+@for (node of nodes$ | async; track node.uri) {
+  <luna-tree-node [node]="node"></luna-tree-node>
+}

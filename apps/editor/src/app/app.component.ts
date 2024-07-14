@@ -16,7 +16,19 @@ import { CodeLang } from './shared/interfaces/CodeLang';
 
 @Component({
   standalone: true,
-  imports: [MaterialModule, RouterModule, TitlebarComponent, TitlebarComponent, SidenavComponent, EditorTabsComponent, EditorTabComponent, JsonPipe, CodemirrorModule, FormsModule, StatusbarComponent],
+  imports: [
+    TitlebarComponent,
+    TitlebarComponent,
+    SidenavComponent,
+    EditorTabsComponent,
+    EditorTabComponent,
+    StatusbarComponent,
+    JsonPipe,
+    CodemirrorModule,
+    FormsModule,
+    MaterialModule,
+    RouterModule,
+  ],
   selector: 'luna-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

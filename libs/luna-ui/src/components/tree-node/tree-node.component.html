@@ -1,0 +1,8 @@
+@if (node) {
+  <div class="tree-node"
+       [class.node-type-dir]="node.type==='dir'"
+       [class.node-type-file]="node.type==='file'"
+       [class.node-type-symlink]="node.type==='symlink'">
+    <span class="node-name">{{node.name}}</span>
+  </div>
+}

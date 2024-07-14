@@ -1,0 +1,15 @@
+.tree-node {
+  padding: 2pt 0;
+}
+
+.tree-node::before {
+  display: inline-block;
+  font-size: 10pt;
+  width: 15pt;
+  vertical-align: middle;
+  content: " ";
+}
+
+.tree-node.node-type-dir::before {
+  content: "►";
+}

@@ -1,23 +1,30 @@
-import { Component, HostListener, signal, WritableSignal } from '@angular/core';
+import { Component, HostListener, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidenavToolbarComponent } from './sidenav-toolbar/sidenav-toolbar.component';
 import { SidenavToolbarItemType } from '../../shared/interfaces/SidenavToolbarItemType';
 import { SidenavToolbarItem } from '../../shared/interfaces/SidenavToolbarItem';
 import { SidenavService } from '../../services/sidenav.service';
+import { TreeViewComponent } from '@luna/luna-ui';
 
 @Component({
   selector: 'luna-sidenav',
   standalone: true,
-  imports: [CommonModule, SidenavToolbarComponent],
+  imports: [CommonModule, SidenavToolbarComponent, TreeViewComponent],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  readonly sidenavItems: WritableSignal<SidenavToolbarItem[]> = signal([]);
+  readonly sidenavItems: WritableSignal<SidenavToolbarItem[]> = signal([
+    {
+      icon: 'folder',
+      type: SidenavToolbarItemType.FILE_TREE,
+      placeholder: 'Folder view'
+    }
+  ]);
 
   selected: WritableSignal<SidenavToolbarItemType> = signal(SidenavToolbarItemType.NONE);
 
-   // This stores the state of the resizing event and is updated as events are fired.
+  // This stores the state of the resizing event and is updated as events are fired.
   resizingEvent = {
     isResizing: false,
     startingCursorX: 0,
@@ -25,13 +32,6 @@ export class SidenavComponent {
   };
 
   constructor(public readonly sidenavService: SidenavService) {
-    this.sidenavItems.set([
-      {
-        type: SidenavToolbarItemType.FILE_TREE,
-        icon: 'folder',
-        placeholder: 'Explorer'
-      }
-    ]);
   }
 
   openSidenav(type: SidenavToolbarItemType): void {
