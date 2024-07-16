@@ -4,7 +4,9 @@
     <div class="sidenav-content">
       @switch (selected()) {
         @case (SidenavToolbarItemType.FILE_TREE) {
-          <luna-tree-view></luna-tree-view>
+          <luna-tree-view
+            (action)="handleFileAction($event)"
+          ></luna-tree-view>
         }
         @case (SidenavToolbarItemType.NONE) {
           <p>Unknown selected item...</p>

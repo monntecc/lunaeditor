@@ -13,9 +13,9 @@ export class FsEffects {
 
   listDirectoryContents$ = createEffect(() => this.actions$.pipe(
     ofType(LIST_DIRECTORY_CONTENTS),
-    mergeMap(({ path }) => this.fileSystem.ls(path).pipe(
-      map((res: any) => res.nodes as TreeNode[]),
-      map(nodes => DIRECTORY_CONTENTS({ path, nodes }))
+    mergeMap(() => this.fileSystem.openFolder().pipe(
+      map((res: any) => res as TreeNode[]),
+      map(nodes => DIRECTORY_CONTENTS({ nodes }))
     ))
   ));
 

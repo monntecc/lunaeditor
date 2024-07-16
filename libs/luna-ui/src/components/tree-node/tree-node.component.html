@@ -1,8 +1,68 @@
 @if (node) {
-  <div class="tree-node"
-       [class.node-type-dir]="node.type==='dir'"
-       [class.node-type-file]="node.type==='file'"
-       [class.node-type-symlink]="node.type==='symlink'">
-    <span class="node-name">{{node.name}}</span>
-  </div>
+  @if (node.is_dir) {
+    <ng-container [ngTemplateOutlet]="folderNode" [ngTemplateOutletContext]="{ node: node }"></ng-container>
+  } @else {
+    <ng-container [ngTemplateOutlet]="fileNode" [ngTemplateOutletContext]="{ node: node }"></ng-container>
+  }
 }
+
+<ng-template let-node="node" #fileNode>
+  <div class="tree-node">
+    <div class="node-content"
+         (click)="open(node.path)"
+         (mouseenter)="hovered.set(true)"
+         (mouseleave)="hovered.set(false)"
+    >
+      <mat-icon class="node-icon" svgIcon="file"></mat-icon>
+      <span class="node-name">{{node.name}}</span>
+    </div>
+
+
+    @if (hovered()) {
+      <ng-container [ngTemplateOutlet]="nodeActions" [ngTemplateOutletContext]="{ path: node.path }"></ng-container>
+    }
+  </div>
+</ng-template>
+
+<ng-template let-node="node" #folderNode>
+  <div class="tree-node">
+    <div class="node-content"
+         (click)="open('', true)"
+         (mouseenter)="hovered.set(true)"
+         (mouseleave)="hovered.set(false)"
+    >
+      <mat-icon
+        class="expand-icon"
+        [svgIcon]="opened() ? 'arrow-down' : 'arrow-right'"
+      ></mat-icon>
+      <mat-icon class="node-icon" svgIcon="folder_view"></mat-icon>
+      <span class="node-name">{{node.name}}</span>
+    </div>
+
+    @if (node.nodes.length > 0 && opened()) {
+      <div class="expandable">
+        @for (children of node.nodes; track children.name) {
+          <luna-tree-node [node]="children" (action)="childrenAction($event)"></luna-tree-node>
+        }
+      </div>
+    }
+
+    @if (hovered()) {
+      <ng-container [ngTemplateOutlet]="nodeActions" [ngTemplateOutletContext]="{ path: node.path }"></ng-container>
+    }
+  </div>
+</ng-template>
+
+<ng-template let-path="path" #nodeActions>
+  <div class="tree-node-actions"
+       (mouseenter)="hovered.set(true)"
+       (mouseleave)="hovered.set(false)"
+  >
+    <div class="node-action success" (click)="rename(path)">
+      <mat-icon class="action-icon" svgIcon="rename"></mat-icon>
+    </div>
+    <div class="node-action warn" (click)="delete(path)">
+      <mat-icon class="action-icon" svgIcon="delete"></mat-icon>
+    </div>
+  </div>
+</ng-template>

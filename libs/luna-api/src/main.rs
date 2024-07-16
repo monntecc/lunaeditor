@@ -17,6 +17,24 @@ use tauri::App;
 
 static mut SETTINGS_FOUND: bool = false;
 
+fn get_extension(path: &PathBuf) -> String {
+    match Path::new(path).extension() {
+        Some(ext) => ext.to_str().unwrap().to_string(),
+        None => String::new(),
+    }
+}
+
+fn get_name_from_path(path: &PathBuf) -> String {
+    match Path::new(path).file_name() {
+        Some(name) => name.to_str().unwrap().to_string(),
+        None => String::new(),
+    }
+}
+
+fn format_path(path: &PathBuf) -> String {
+    path.to_str().unwrap().to_string()
+}
+
 #[derive(Hash, Eq, PartialEq, Debug, Serialize, Deserialize, Default)]
 struct FileInformation {
     // File name
@@ -33,13 +51,56 @@ struct FileInformation {
 
 #[derive(Hash, Eq, PartialEq, Debug, Serialize, Deserialize, Default)]
 struct TreeNode {
+    // Tree node is directory?
     is_dir: bool,
-    file: FileInformation,
+    // Name of folder/file
+    name: String,
+    // Folder/file path
+    path: String,
+    // File extension (folder will get empty string)
+    extension: String,
+    // Files under folder (file will get empty vec)
     nodes: Vec<TreeNode>
 }
 
+fn recurse_files(path: impl AsRef<Path>) -> Vec<TreeNode> {
+    let mut nodes: Vec<TreeNode> = vec![];
+    let entries = fs::read_dir(path).unwrap();
+
+    for entry in entries {
+        let entry = entry.unwrap();
+        let meta = entry.metadata().unwrap();
+
+        if meta.is_dir() {
+            let mut sub_dir = recurse_files(entry.path());
+            nodes.push(TreeNode {
+                is_dir: true,
+                name: get_name_from_path(&entry.path()),
+                path: format_path(&entry.path()),
+                extension: String::new(),
+                nodes: sub_dir,
+            });
+        }
+
+        if meta.is_file() {
+            nodes.push(TreeNode {
+                is_dir: false,
+                name: get_name_from_path(&entry.path()),
+                path: format_path(&entry.path()),
+                extension: get_extension(&entry.path()),
+                nodes: vec![],
+            });
+        }
+    }
+
+    // Sort nodes, directories first
+    nodes.sort_by(|node, next| node.is_dir.partial_cmp(&next.is_dir).unwrap());
+    nodes.reverse();
+    nodes
+}
+
 #[tauri::command]
-fn open_folder(path: &str) {
+fn open_folder() -> Vec<TreeNode> {
     let path = FileDialog::new()
         .set_location("~/Desktop")
         .show_open_single_dir()
@@ -47,39 +108,10 @@ fn open_folder(path: &str) {
 
     let path = match path {
         Some(path) => path,
-        None => return,
+        None => return vec![],
     };
 
-    let entries = fs::read_dir(path).unwrap();
-
-    for entry in entries {
-        match entry {
-            Ok(entry) => {
-                let file = File::open(entry.path());
-                match file {
-                    Ok(mut file) => {
-                        let mut buffer = Vec::new();
-                        let content = file.read_to_end(&mut buffer);
-                        match content {
-                            Ok(sz) => {
-                                println!("  got {} bytes", sz);
-                                // we should work with buffer here
-                            }
-                            Err(e) => {
-                                println!("  read error: {:?}", e);
-                            }
-                        }
-                    }
-                    Err(e) => {
-                        println!("  open error: {:?}", e);
-                    }
-                }
-            }
-            Err(e) => {
-                println!("  entry error: {:?}", e);
-            }
-        }
-    }
+    recurse_files(path)
 }
 
 #[tauri::command]
@@ -289,7 +321,8 @@ fn main() {
             delete_file,
             read_file,
             write_file,
-            settings_availability
+            settings_availability,
+            open_folder,
         ])
         .plugin(tauri_plugin_fs_watch::init())
         .plugin(tauri_plugin_store::Builder::default().build())

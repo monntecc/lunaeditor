@@ -12,7 +12,7 @@ export const INITIAL_FS_STATE: FsState = {
 
 const fsReducer: ActionReducer<FsState> = createReducer(
   INITIAL_FS_STATE,
-  on(DIRECTORY_CONTENTS, (state: FsState, { path, nodes }): FsState => ({ nodes }))
+  on(DIRECTORY_CONTENTS, (state: FsState, { nodes }): FsState => ({ nodes }))
 );
 
 export function reducer(state: FsState | undefined, action: Action) {

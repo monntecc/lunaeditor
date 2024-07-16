@@ -47,6 +47,10 @@ export class FileService {
       title: 'Pick file to open in Luna Editor'
     });
 
+   await this.readFile(path as string);
+  }
+
+  public async readFile(path: string): Promise<void> {
     const file: FileInformation = await invoke('read_file', { path });
     const tab: FileInformation = { ...file, id: uuidv4() };
     this.opened.set([...this.opened(), tab]);

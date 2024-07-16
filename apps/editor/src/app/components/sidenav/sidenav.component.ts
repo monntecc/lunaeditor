@@ -4,7 +4,8 @@ import { SidenavToolbarComponent } from './sidenav-toolbar/sidenav-toolbar.compo
 import { SidenavToolbarItemType } from '../../shared/interfaces/SidenavToolbarItemType';
 import { SidenavToolbarItem } from '../../shared/interfaces/SidenavToolbarItem';
 import { SidenavService } from '../../services/sidenav.service';
-import { TreeViewComponent } from '@luna/luna-ui';
+import { NodeAction, TreeViewComponent } from '@luna/luna-ui';
+import { FileService } from '../../services/file.service';
 
 @Component({
   selector: 'luna-sidenav',
@@ -31,7 +32,7 @@ export class SidenavComponent {
     startingWidth: 0,
   };
 
-  constructor(public readonly sidenavService: SidenavService) {
+  constructor(public readonly sidenavService: SidenavService, private readonly fileService: FileService) {
   }
 
   openSidenav(type: SidenavToolbarItemType): void {
@@ -70,4 +71,21 @@ export class SidenavComponent {
   }
 
   protected readonly SidenavToolbarItemType = SidenavToolbarItemType;
+
+  handleFileAction(action: NodeAction) {
+    switch (action.action) {
+      case 'open': {
+        this.fileService.readFile(action.path).catch();
+        break;
+      }
+      case 'delete': {
+        console.log(`Delete action: ${action.path}`);
+        break;
+      }
+      case 'rename': {
+        console.log(`Rename action: ${action.path}`);
+        break;
+      }
+    }
+  }
 }

@@ -7,9 +7,10 @@
 .sidenav-content {
   position: relative;
   width: var(--sidenav-width);
-  padding: 12px;
+  padding: 10px;
   background-color: #ececec;
   color: #0f0f0f;
+  overflow-y: scroll;
 }
 
 .resize-handle {

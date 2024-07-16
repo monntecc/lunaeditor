@@ -1,3 +1,12 @@
-@for (node of nodes$ | async; track node.uri) {
-  <luna-tree-node [node]="node"></luna-tree-node>
-}
+<div class="tree-view-wrapper">
+  @if ((nodes$ | async)!.length > 0) {
+    @for (node of nodes$ | async; track node.name) {
+      <luna-tree-node [node]="node" (action)="action.emit($event)"></luna-tree-node>
+    }
+  } @else {
+    <div class="open-wrapper">
+      <span>Workspace not initialized.</span>
+      <luna-button variant="outlined" (click)="openFolder()">Open folder</luna-button>
+    </div>
+  }
+</div>

@@ -3,5 +3,5 @@ import { TreeNode } from '../../shared/interfaces/TreeNode';
 
 export const DIRECTORY_CONTENTS = createAction(
   '[FileSystem] Directory Contents',
-  props<{ path: string, nodes: TreeNode[] }>()
+  props<{ nodes: TreeNode[] }>()
 );

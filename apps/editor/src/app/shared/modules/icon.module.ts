@@ -14,7 +14,13 @@ export class IconModule {
     'close',
     'minus',
     'maximize',
-    'folder'
+    'folder',
+    'arrow-right',
+    'arrow-down',
+    'delete',
+    'rename',
+    'folder_view',
+    'file'
   ];
 
   constructor(private readonly domSanitizer: DomSanitizer, private readonly iconRegistry: MatIconRegistry) {
