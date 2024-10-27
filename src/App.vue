@@ -2,6 +2,7 @@
 import { Ref, ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import { open } from '@tauri-apps/plugin-dialog';
+import Titlebar from "@/ui/system/Titlebar.vue";
 
 const path: Ref<string> = ref("");
 const content: Ref<string> = ref("");
@@ -36,6 +37,7 @@ async function writeFile() {
 </script>
 
 <template>
+  <Titlebar />
   <main class="container">
     <h1>Luna Editor</h1>
 
@@ -55,20 +57,24 @@ async function writeFile() {
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-optical-sizing: auto;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
 
-  color: #0f0f0f;
-  background-color: #f6f6f6;
+  color: #f6f6f6;
+  background-color: #2f2f2f;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
 }
 
 .container {
@@ -108,8 +114,8 @@ textarea {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: #0f0f0f98;
   transition: border-color 0.25s;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
@@ -128,33 +134,11 @@ button:hover {
 }
 button:active {
   border-color: #396cd8;
-  background-color: #e8e8e8;
+  background-color: #0f0f0f69;
 }
 
 input,
 button {
   outline: none;
 }
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
-
-  a:hover {
-    color: #24c8db;
-  }
-
-  input,
-  button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
-  }
-  button:active {
-    background-color: #0f0f0f69;
-  }
-}
-
 </style>
