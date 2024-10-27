@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - latest
+      - refactor
+      - dev
+  pull_request:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Deno 2.0
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Install dependencies
+        run: deno install
+
+      - name: build
+        run: deno task build:app
