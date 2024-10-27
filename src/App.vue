@@ -1,51 +1,59 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { Ref, ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
+import { open } from '@tauri-apps/plugin-dialog';
 
-const greetMsg = ref("");
-const name = ref("");
+const path: Ref<string> = ref("");
+const content: Ref<string> = ref("");
+const writeResult: Ref<string> = ref("");
 
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsg.value = await invoke("greet", { name: name.value });
+interface SuccessResult {
+  code: number;
+  message: string;
+}
+
+async function readFile() {
+  const selected: string | null = await open({
+    multiple: false,
+    directory: false,
+    title: 'Open a file'
+  });
+  if (selected !== null) {
+    path.value = selected;
+    const contents: ArrayBuffer = await invoke('read_file', { path: path.value });
+    const encoder = new TextDecoder('utf-8');
+    content.value = encoder.decode(new Uint8Array(contents as ArrayBuffer));
+  }
+}
+
+async function writeFile() {
+  const encoder = new TextEncoder();
+  const buffer = encoder.encode(content.value);
+  const result: SuccessResult = await invoke('write_file', { path: path.value, data: buffer });
+  console.log(result);
+  writeResult.value = `Result: [Code - ${result.code}] [Message - ${result.message}]`;
 }
 </script>
 
 <template>
   <main class="container">
-    <h1>Welcome to Tauri + Vue</h1>
+    <h1>Luna Editor</h1>
 
-    <div class="row">
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" class="logo vite" alt="Vite logo" />
-      </a>
-      <a href="https://tauri.app" target="_blank">
-        <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-      </a>
-    </div>
-    <p>Click on the Tauri, Vite, and Vue logos to learn more.</p>
-
-    <form class="row" @submit.prevent="greet">
-      <input id="greet-input" v-model="name" placeholder="Enter a name..." />
-      <button type="submit">Greet</button>
+    <form class="row" @submit.prevent="readFile">
+      <button type="submit">Open a file</button>
     </form>
-    <p>{{ greetMsg }}</p>
+
+    <p>{{ path }}</p>
+    <textarea v-model="content"></textarea>
+
+    <form class="row" @submit.prevent="writeFile">
+      <button type="submit">Write new version</button>
+    </form>
+
+    {{ writeResult }}
   </main>
 </template>
 
-<style scoped>
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #249b73);
-}
-
-</style>
 <style>
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -72,17 +80,6 @@ async function greet() {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
-}
-
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
-}
-
 .row {
   display: flex;
   justify-content: center;
@@ -103,7 +100,8 @@ h1 {
 }
 
 input,
-button {
+button,
+textarea {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -114,6 +112,11 @@ button {
   background-color: #ffffff;
   transition: border-color 0.25s;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+textarea {
+  resize: none;
+  height: 50vh;
 }
 
 button {
@@ -133,9 +136,6 @@ button {
   outline: none;
 }
 
-#greet-input {
-  margin-right: 5px;
-}
 
 @media (prefers-color-scheme: dark) {
   :root {

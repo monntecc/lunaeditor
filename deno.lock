@@ -491,6 +491,8 @@
       "dependencies": [
         "npm:@tauri-apps/api@2",
         "npm:@tauri-apps/cli@2",
+        "npm:@tauri-apps/plugin-dialog@~2.0.1",
+        "npm:@tauri-apps/plugin-fs@~2.0.1",
         "npm:@tauri-apps/plugin-shell@2",
         "npm:@vitejs/plugin-vue@^5.0.5",
         "npm:typescript@^5.2.2",
