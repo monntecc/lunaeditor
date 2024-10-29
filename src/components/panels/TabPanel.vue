@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import {ref, computed} from "vue";
-import {TabPanelItem} from "@/model/TabPanelItem.ts";
+import { ref, computed } from "vue";
+import { TabPanelItem } from "@/model/TabPanelItem.ts";
 import NewTabIcon from "@/components/icons/NewTabIcon.vue";
 import CloseIcon from "@/components/icons/CloseIcon.vue";
 import CubeIcon from "@/components/icons/CubeIcon.vue";
+import CodeEditorPanel from "@/components/panels/CodeEditorPanel.vue";
 
 const tabs = ref<TabPanelItem[]>([]);
 const currentTab = ref<number | null>();
@@ -11,8 +12,8 @@ const currentTab = ref<number | null>();
 const addTab = () => {
   const newTab: TabPanelItem = {
     id: Date.now(), // Unique ID based on timestamp
-    title: `Tab ${tabs.value.length + 1}`,
-    content: `Content for Tab ${tabs.value.length + 1}`,
+    title: 'New file',
+    content: '',
   };
   tabs.value.push(newTab);
   selectTab(newTab.id); // Automatically select the new tab
@@ -58,7 +59,9 @@ const currentTabContent = computed(() => {
       </button>
     </div>
     <div class="tab-content">
-      <div v-if="currentTabContent">{{ currentTabContent.content }}</div>
+      <div v-if="currentTabContent && currentTab">
+        <CodeEditorPanel @change="currentTabContent.content = $event" file-path="" :buffer="currentTabContent.content" />
+      </div>
       <div v-else class="no-content-available">
         <div class="icon">
           <CubeIcon />
@@ -186,9 +189,5 @@ const currentTabContent = computed(() => {
       background-color: #a6a6a6;
     }
   }
-}
-
-.tab-content {
-  padding: 10px;
 }
 </style>
