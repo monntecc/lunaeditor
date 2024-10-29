@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { getCurrentWindow } from "@tauri-apps/api/window";
 import { TitlebarAction } from "@/model/TitlebarAction.ts";
 import { Ref, ref } from "vue";
 import { version } from '../../../package.json';
-import DropdopwMenu from "@/ui/system/DropdopwMenu.vue";
+import DropdownMenu from "@/components/system/DropdopwMenu.vue";
+import { closeWindow, maximizeWindow, minimizeWindow } from "@/utils/window.ts";
 
 const baseImageUrl: string = '/assets/window';
 const appVersion: string = version;
@@ -14,28 +14,28 @@ const actions: Ref<TitlebarAction[]> = ref([
     name: 'minimize',
     imageUrl: baseImageUrl + '/minimize.png',
     description: 'Minimize button action',
-    func: () => getCurrentWindow().minimize(),
+    func: () => minimizeWindow(),
   },
   // Maximize button action
   {
     name: 'maximize',
     imageUrl: baseImageUrl + '/maximize.png',
     description: 'Maximize button action',
-    func: () => getCurrentWindow().toggleMaximize(),
+    func: () => maximizeWindow(),
   },
   // Close button action
   {
     name: 'close',
     imageUrl: baseImageUrl + '/close.png',
     description: 'Close button action',
-    func: () => getCurrentWindow().close(),
+    func: () => closeWindow(),
   },
 ]);
 </script>
 
 <template>
   <nav class="titlebar" data-tauri-drag-region>
-    <DropdopwMenu />
+    <DropdownMenu />
     <div class="title" data-tauri-drag-region>Luna Editor [{{ appVersion }}]</div>
     <div><div
         :class="{ 'titlebar-button': action, 'warn': action.name === 'close' }"
@@ -49,10 +49,7 @@ const actions: Ref<TitlebarAction[]> = ref([
 
 <style scoped lang="scss">
 .titlebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -77,8 +74,8 @@ const actions: Ref<TitlebarAction[]> = ref([
   transition: background-color 0.2s;
 
   img {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 
   &:hover {

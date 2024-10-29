@@ -19,7 +19,7 @@ const onHover = () => isHovered.value = !isHovered.value;
     <div class="dropdown-options" v-if="isHovered">
       <div class="dropdown-menu-children" v-for="children in parent.children" @click="children.func()">
         <span>{{ children.span }}</span>
-        <kbd>{{ children.shortcut }}</kbd>
+        <kbd>{{ children.shortcut.join(' + ') }}</kbd>
       </div>
     </div>
   </div>
@@ -38,13 +38,17 @@ const onHover = () => isHovered.value = !isHovered.value;
 
 .dropdown-options {
   position: absolute;
+  min-width: 200px;
   width: auto;
-  left: 0;
+  left: 1px;
   margin-top: 8px;
   display: flex;
   flex-direction: column;
   padding: 2px;
   background-color: #1c1c1c;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: 1px solid #3f3f3f;
 }
 
 .dropdown-menu-children {
@@ -60,14 +64,19 @@ const onHover = () => isHovered.value = !isHovered.value;
 
   &:hover {
     background-color: rgba(51, 51, 51, 0.62);
+    &:last-child {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
   }
 }
 
 kbd {
   font-size: 8px;
-  font-weight: 500;
+  font-weight: 700;
   text-wrap: nowrap;
-  background-color: rgba(44, 44, 44, 0.62);
-  padding: 2px;
+  padding: 4px;
+  background-color: rgba(72, 72, 72, 0.21);
+  border-radius: 4px;
 }
 </style>

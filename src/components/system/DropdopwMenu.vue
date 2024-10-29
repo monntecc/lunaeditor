@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import DropdownMenuItem from "@/ui/system/DropdownMenuItem.vue";
+import DropdownMenuItem from "@/components/system/DropdownMenuItem.vue";
 import { DropdownMenuParent } from "@/model/DropdownMenuParent.ts";
 import { ref, Ref } from "vue";
+import { openFile } from "@/utils/file-system.ts";
+import { closeWindow } from "@/utils/window.ts";
 
 const menus: Ref<DropdownMenuParent[]> = ref([
   {
@@ -10,7 +12,17 @@ const menus: Ref<DropdownMenuParent[]> = ref([
       {
         span: 'Open file',
         shortcut: ['Ctrl', 'O'],
-        func: () => console.log('File open'),
+        func: () => openFile({ multiple: false, directory: false }),
+      },
+      {
+        span: 'Open folder',
+        shortcut: ['Ctrl', 'K'],
+        func: () => openFile({ multiple: false, directory: true }),
+      },
+      {
+        span: 'Exit',
+        shortcut: ['Alt', 'F4'],
+        func: () => closeWindow(),
       }
     ]
   }
