@@ -3,10 +3,9 @@ import { CodeData } from "@/model/CodeData.ts";
 import {onBeforeMount, ref, watch} from "vue";
 
 interface StatusbarPanelProps extends CodeData {
-  extension: string;
+  codeLanguage: string;
 }
 
-const language = ref<string>('Plain text');
 const data = ref<CodeData>({
   column: 0,
   line: 0,
@@ -41,7 +40,7 @@ watch(props, () => {
     <div class="wrapper">
       <span>Tab Size: {{ data.tabSize }}</span>
       <span>Language:
-        <span class="lang">{{ language }}</span>
+        <span class="lang">{{ codeLanguage }}</span>
     </span>
     </div>
   </footer>

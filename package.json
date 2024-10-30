@@ -44,12 +44,14 @@
     "@uiw/codemirror-theme-xcode": "^4.23.6",
     "codemirror": "^6.0.1",
     "url": "^0.11.4",
+    "uuid": "^11.0.2",
     "vue": "^3.3.4",
     "vue-codemirror": "^6.1.1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",
     "@types/node": "^22.8.1",
+    "@types/uuid": "^10.0.0",
     "@vitejs/plugin-vue": "^5.0.5",
     "sass": "^1.80.4",
     "typescript": "^5.2.2",

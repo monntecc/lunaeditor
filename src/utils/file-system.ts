@@ -1,9 +1,13 @@
-import { open, OpenDialogOptions } from "@tauri-apps/plugin-dialog";
+import { open, OpenDialogOptions, save, SaveDialogOptions } from "@tauri-apps/plugin-dialog";
 import { invoke } from "@tauri-apps/api/core";
 import { SuccessResult } from "@/model/SuccessResult.ts";
 
 export async function openFile(options: OpenDialogOptions): Promise<string | null> {
     return await open(options);
+}
+
+export async function saveDialog(options: SaveDialogOptions): Promise<string | null> {
+    return await save(options);
 }
 
 export async function readFile(path: string): Promise<Uint8Array> {

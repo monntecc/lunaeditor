@@ -38,8 +38,8 @@ const emit = defineEmits<{
 }>();
 
 const code = ref<string>('');
-const fileExtension = ref<string>('');
-const extensions: Extension[] = [];
+const codeLanguage = ref<string>('');
+const codeMirrorExtensions: Extension[] = [];
 const editorData = ref<CodeData>({
   column: 0,
   line: 0,
@@ -79,35 +79,114 @@ const handleBlurFocus = (viewUpdate: ViewUpdate): void => handleChange(code.valu
 
 const prepareExtensions = (): void => {
   const fileName: string = props.filePath.split("/\\").pop() || '';
-  fileExtension.value = fileName.split(".").pop() || '';
+  const fileExtension = fileName.split(".").pop() || '';
 
   // Select file extension
-  switch (fileExtension.value) {
-    case 'rs': extensions.push(rust()); break;
-    case 'html': case 'htm': extensions.push(html()); break;
-    case 'json': extensions.push(json()); break;
-    case 'js': case 'mjs': case 'ts': extensions.push(javascript()); break;
-    case 'vue': case 'vuex': extensions.push(vue()); break;
-    case 'py': case 'py3': extensions.push(python()); break;
-    case 'cpp': case 'cxx': case 'c': extensions.push(cpp()); break;
-    case 'css': extensions.push(css()); break;
-    case 'sass': case 'scss': extensions.push(sass()); break;
-    case 'less': extensions.push(less()); break;
-    case 'go': extensions.push(go()); break;
-    case 'java': extensions.push(java()); break;
-    case 'liquid': extensions.push(liquid()); break;
-    case 'md': extensions.push(markdown()); break;
-    case 'php': extensions.push(php()); break;
-    case 'sql': extensions.push(sql()); break;
-    case 'wasm': extensions.push(wast()); break;
-    case 'xml': case 'xaml': extensions.push(xml()); break;
-    case 'yml': case 'yaml': extensions.push(yaml()); break;
-    case '': default: break;
+  switch (fileExtension) {
+    case 'rs': {
+      codeMirrorExtensions.push(rust());
+      codeLanguage.value = 'Rust';
+      break;
+    }
+    case 'html': case 'htm': {
+      codeMirrorExtensions.push(html());
+      codeLanguage.value = 'HTML';
+      break;
+    }
+    case 'json': {
+      codeMirrorExtensions.push(json());
+      codeLanguage.value = 'JSON';
+      break;
+    }
+    case 'js': case 'mjs': case 'ts': {
+      codeMirrorExtensions.push(javascript());
+      codeLanguage.value = 'JavaScript';
+      break;
+    }
+    case 'vue': case 'vuex': {
+      codeMirrorExtensions.push(vue());
+      codeLanguage.value = 'Vue / JS';
+      break;
+    }
+    case 'py': case 'py3': {
+      codeMirrorExtensions.push(python());
+      codeLanguage.value = 'Python';
+      break;
+    }
+    case 'cpp': case 'cxx': case 'c': {
+      codeMirrorExtensions.push(cpp());
+      codeLanguage.value = 'C/C++';
+      break;
+    }
+    case 'css': {
+      codeMirrorExtensions.push(css());
+      codeLanguage.value = 'CSS';
+      break;
+    }
+    case 'sass': case 'scss': {
+      codeMirrorExtensions.push(sass());
+      codeLanguage.value = 'SASS';
+      break;
+    }
+    case 'less': {
+      codeMirrorExtensions.push(less());
+      codeLanguage.value = 'Less';
+      break;
+    }
+    case 'go': {
+      codeMirrorExtensions.push(go());
+      codeLanguage.value = 'Golang';
+      break;
+    }
+    case 'java': {
+      codeMirrorExtensions.push(java());
+      codeLanguage.value = 'Java';
+      break;
+    }
+    case 'liquid': {
+      codeMirrorExtensions.push(liquid());
+      codeLanguage.value = 'Liquid';
+      break;
+    }
+    case 'md': {
+      codeMirrorExtensions.push(markdown());
+      codeLanguage.value = 'Markdown';
+      break;
+    }
+    case 'php': {
+      codeMirrorExtensions.push(php());
+      codeLanguage.value = 'PHP';
+      break;
+    }
+    case 'sql': {
+      codeMirrorExtensions.push(sql());
+      codeLanguage.value = 'SQL';
+      break;
+    }
+    case 'wasm': case 'wast': {
+      codeMirrorExtensions.push(wast());
+      codeLanguage.value = 'WebAssembly';
+      break;
+    }
+    case 'xml': case 'xaml': {
+      codeMirrorExtensions.push(xml());
+      codeLanguage.value = 'XAML';
+      break;
+    }
+    case 'yml': case 'yaml': {
+      codeMirrorExtensions.push(yaml());
+      codeLanguage.value = 'YAML';
+      break;
+    }
+    case '': default: {
+      codeLanguage.value = 'Plain';
+      break;
+    }
   }
-  if (props.buffer.includes('@angular') && fileExtension.value.includes('html')) extensions.push(angular());
+  if (props.buffer.includes('@angular') && fileExtension.includes('html')) codeMirrorExtensions.push(angular());
 
   // Add theme
-  extensions.push(xcodeDark);
+  codeMirrorExtensions.push(xcodeDark);
 };
 
 onBeforeMount(() => {
@@ -117,6 +196,7 @@ onBeforeMount(() => {
 
 watch(props, () => {
   code.value = props.buffer;
+  prepareExtensions();
 });
 </script>
 
@@ -128,7 +208,7 @@ watch(props, () => {
         :autofocus="true"
         :indent-with-tab="true"
         :tab-size="2"
-        :extensions="extensions"
+        :extensions="codeMirrorExtensions"
         @ready="handleReady"
         @change="handleChange"
         @focus="handleBlurFocus"
@@ -136,7 +216,7 @@ watch(props, () => {
         @update="handleBlurFocus"
     />
     <StatusbarPanel
-        :extension="fileExtension"
+        :code-language="codeLanguage"
         :tab-size="editorData.tabSize"
         :line="editorData.line"
         :column="editorData.column"

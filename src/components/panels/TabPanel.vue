@@ -1,41 +1,50 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { TabPanelItem } from "@/model/TabPanelItem.ts";
+import { ref, computed, onMounted } from "vue";
 import NewTabIcon from "@/components/icons/NewTabIcon.vue";
 import CloseIcon from "@/components/icons/CloseIcon.vue";
 import CubeIcon from "@/components/icons/CubeIcon.vue";
 import CodeEditorPanel from "@/components/panels/CodeEditorPanel.vue";
+import {closeAndSaveToStorage, getStorageState, openEmptyAndSave, updateOpenedState} from "@/utils/editor.ts";
+import {FileState, StorageState} from "@/model/StorageState.ts";
 
-const tabs = ref<TabPanelItem[]>([]);
-const currentTab = ref<number | null>();
+const tabState = ref<FileState[]>([]);
+const activeTabPanel = ref<string | null>();
 
-const addTab = () => {
-  const newTab: TabPanelItem = {
-    id: Date.now(), // Unique ID based on timestamp
-    title: 'New file',
-    content: '',
-  };
-  tabs.value.push(newTab);
-  selectTab(newTab.id); // Automatically select the new tab
+const closeIndicated = (id: string) => {
+  closeAndSaveToStorage(id, false);
 };
 
-const removeTab = (tabId: number) => {
-  const index = tabs.value.findIndex(tab => tab.id === tabId);
-  if (index !== -1) {
-    tabs.value.splice(index, 1);
-    if (currentTab.value === tabId) {
-      // Select the first tab if the current one is removed
-      currentTab.value = tabs.value.length ? tabs.value[0].id : null;
-    }
-  }
-};
-
-const selectTab = (tabId: number) => {
-  currentTab.value = tabId;
+const activateSelected = (id: string) => {
+  activeTabPanel.value = id;
+  tabState.value = tabState.value.map((v: FileState) => ({ ...v, active: false })); // Make all inactive
+  const index: number = tabState.value.findIndex((v: FileState) => v.id === id);
+  tabState.value[index].active = true;
+  updateOpenedState(tabState.value);
 };
 
 const currentTabContent = computed(() => {
-  return tabs.value.find(tab => tab.id === currentTab.value);
+  return tabState.value.find(tab => tab.id === activeTabPanel.value);
+});
+
+const updateStorageState = (state: StorageState): void => {
+  tabState.value = state.opened;
+  const active: FileState | undefined = state.opened.find((v: FileState) => v.active);
+  if (active) activateSelected(active.id);
+}
+
+const updateTabContent = (content: string): void => {
+  if (!currentTabContent.value) return;
+  if (currentTabContent.value.content === content) return;
+  currentTabContent.value.content = content;
+  updateOpenedState(tabState.value);
+}
+
+onMounted(async () => {
+  // Called every time, when event dispatched
+  // @ts-ignore
+  window.addEventListener('storage-state', (event: CustomEvent) => updateStorageState(event.detail.state));
+  // Called only once, when component is loaded
+  updateStorageState(getStorageState());
 });
 </script>
 
@@ -44,23 +53,23 @@ const currentTabContent = computed(() => {
     <div class="tabs-roller">
       <div
           class="tab"
-          v-for="tab in tabs"
+          v-for="tab in tabState"
           :key="tab.id"
-          :class="{ active: currentTab === tab.id }"
-          @click="selectTab(tab.id)"
+          :class="{ active: activeTabPanel === tab.id }"
+          @click="activateSelected(tab.id)"
       >
         <div>{{ tab.title }}</div>
-        <button class="close-btn" @click.stop="removeTab(tab.id)">
+        <button class="close-btn" @click.stop="closeIndicated(tab.id)">
           <span><CloseIcon /></span>
         </button>
       </div>
-      <button class="add-tab" @click="addTab">
+      <button class="add-tab" @click="openEmptyAndSave()">
         <NewTabIcon />
       </button>
     </div>
     <div class="tab-content">
-      <div v-if="currentTabContent && currentTab">
-        <CodeEditorPanel @change="currentTabContent.content = $event" file-path="" :buffer="currentTabContent.content" />
+      <div v-if="currentTabContent && currentTabContent.content !== undefined">
+        <CodeEditorPanel @change="updateTabContent" :file-path="currentTabContent.path" :buffer="currentTabContent.content" />
       </div>
       <div v-else class="no-content-available">
         <div class="icon">

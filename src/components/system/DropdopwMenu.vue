@@ -2,8 +2,8 @@
 import DropdownMenuItem from "@/components/system/DropdownMenuItem.vue";
 import { DropdownMenuParent } from "@/model/DropdownMenuParent.ts";
 import { ref, Ref } from "vue";
-import { openFile } from "@/utils/file-system.ts";
 import { closeWindow } from "@/utils/window.ts";
+import {openAndSaveToStorage, saveFileAs} from "@/utils/editor.ts";
 
 const menus: Ref<DropdownMenuParent[]> = ref([
   {
@@ -12,17 +12,31 @@ const menus: Ref<DropdownMenuParent[]> = ref([
       {
         span: 'Open file',
         shortcut: ['Ctrl', 'O'],
-        func: () => openFile({ multiple: false, directory: false }),
+        func: () => openAndSaveToStorage(),
       },
       {
         span: 'Open folder',
         shortcut: ['Ctrl', 'K'],
-        func: () => openFile({ multiple: false, directory: true }),
+        func: () => openAndSaveToStorage(true),
+      },
+      {
+        span: 'Save as',
+        shortcut: ['Ctrl', 'L'],
+        func: () => saveFileAs(),
       },
       {
         span: 'Exit',
         shortcut: ['Alt', 'F4'],
         func: () => closeWindow(),
+      }
+    ]
+  },
+  {
+    span: 'About',
+    children: [
+      {
+        span: 'Github',
+        func: () => window.open('https://github.com/monntecc/lunaeditor'),
       }
     ]
   }
@@ -41,7 +55,6 @@ const menus: Ref<DropdownMenuParent[]> = ref([
 .titlebar-menu {
   position: relative;
   display: flex;
-  gap: 12px;
   z-index: 9999;
 }
 </style>

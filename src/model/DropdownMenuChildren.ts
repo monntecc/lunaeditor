@@ -1,5 +1,5 @@
 export interface DropdownMenuChildren {
     span: string;
-    shortcut: string[];
+    shortcut?: string[];
     func: () => void;
 }

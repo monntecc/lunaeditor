@@ -19,7 +19,9 @@ const onHover = () => isHovered.value = !isHovered.value;
     <div class="dropdown-options" v-if="isHovered">
       <div class="dropdown-menu-children" v-for="children in parent.children" @click="children.func()">
         <span>{{ children.span }}</span>
-        <kbd>{{ children.shortcut.join(' + ') }}</kbd>
+        <template v-if="children.shortcut">
+          <kbd>{{ children.shortcut.join(' + ') }}</kbd>
+        </template>
       </div>
     </div>
   </div>
